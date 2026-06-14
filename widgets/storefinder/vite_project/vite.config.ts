@@ -23,7 +23,7 @@ export default defineConfig({
     'process.env.NODE_ENV': JSON.stringify('production')
   },
   build: {
-    outDir: `../../../platform/cdn/www/${widgetName}/src/`,
+    outDir: `../../../services/cdn/www/${widgetName}/src/`,
     cssCodeSplit: false,
     emptyOutDir: false,
     lib: {

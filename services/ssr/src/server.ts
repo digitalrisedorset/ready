@@ -7,6 +7,7 @@ import 'dotenv/config';
 import express from 'express';
 import {buildRenderPayload} from "./payload";
 import {SsrRenderOperation} from "./ssr-operation";
+import {resolveDevice} from "./user-agent";
 
 const app = express();
 app.use(express.json());
@@ -26,7 +27,7 @@ app.post('/render', async (req, res) => {
                 ...req.body,
                 runtimeConfig: {
                     ...req.body.runtimeConfig,
-                    userAgent: req.headers['user-agent']
+                    userAgent: resolveDevice(req.headers['user-agent'])
                 }
             });
 

@@ -42,12 +42,6 @@ jobs:
             ./services/cdn/www/ \
             ${{ secrets.WIDGET_SSH_USER }}@${{ secrets.WIDGET_SSH_HOST }}:/var/www/cdn/
 
-      - name: Sync SSR widgets source code
-        run: |
-          rsync -avz --delete \
-            ./services/ssr/code/ \
-            ${{ secrets.WIDGET_SSH_USER }}@${{ secrets.WIDGET_SSH_HOST }}:/var/www/widgets_src/
-
       - name: Sync SSR runtime
         run: |
           rsync -avz --delete \
@@ -69,3 +63,15 @@ jobs:
             pm2 restart widgets-ssr || pm2 start npm --name "widgets-ssr" -- run start
             pm2 save
           EOF
+
+      - name: Sync widget source
+        run: |
+          rsync -avz --delete \
+            --exclude "node_modules" \
+            --exclude "dist" \
+            --exclude "coverage" \
+            --exclude "test-results" \
+            --exclude ".git" \
+            --exclude ".github" \
+            ./widgets/ \
+            ${{ secrets.WIDGET_SSH_USER }}@${{ secrets.WIDGET_SSH_HOST }}:/var/www/widgets_src/
