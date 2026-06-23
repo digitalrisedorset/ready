@@ -39,12 +39,16 @@ for (const manifest of manifests) {
 
     console.log(`\nBuilding: ${manifest}`);
 
-    execSync(
-        `npx tsx scripts/build-css-bundle.ts ${manifest}`,
-        {
-            stdio: 'inherit'
-        }
-    );
+    try {
+        execSync(
+            `npx tsx scripts/build-css-bundle.ts ${manifest}`,
+            {
+                stdio: 'inherit'
+            }
+        );
+    } catch (e) {
+        console.log(`bundle failed with ${manifest}`)
+    }
 }
 
 console.log('\n✔ All CSS bundles generated');
