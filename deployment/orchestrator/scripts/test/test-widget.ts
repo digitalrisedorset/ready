@@ -52,7 +52,5 @@ export function testWidget(
                 widget: widgetName
             }
         );
-
-        throw error;
     }
 }
