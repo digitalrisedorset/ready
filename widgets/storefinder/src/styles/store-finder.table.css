@@ -1,5 +1,5 @@
 .storeTable {
-    margin-top: var(--sf-space-lg);
+    margin-top: var(--widget-space-lg);
 }
 
 .storeTable__title {
@@ -9,7 +9,7 @@
 .storeTable__table {
     width: 100%;
     border-collapse: collapse;
-    margin-top: var(--sf-space-sm);
+    margin-top: var(--widget-space-sm);
 }
 
 .storeTable__headRow {
@@ -17,19 +17,19 @@
 }
 
 .storeTable__th {
-    padding: var(--sf-space-sm);
+    padding: var(--widget-space-sm);
     text-align: left;
     border-bottom: 2px solid #ccc;
 }
 
 .storeTable__row {
-    border-bottom: 1px solid var(--sf-color-border);
+    border-bottom: 1px solid var(--widget-color-border);
 }
 
 .storeTable__td {
-    padding: var(--sf-space-sm);
+    padding: var(--widget-space-sm);
 }
 
 .storeTable__empty {
-    margin-top: var(--sf-space-lg);
+    margin-top: var(--widget-space-lg);
 }

@@ -1,18 +1,18 @@
 .storeSearchForm {
     display: flex;
     align-items: center;
-    gap: var(--sf-space-sm);
-    margin-bottom: var(--sf-space-lg);
+    gap: var(--widget-space-sm);
+    margin-bottom: var(--widget-space-lg);
 }
 
 .storeSearchForm__input {
-    padding: var(--sf-space-sm);
+    padding: var(--widget-space-sm);
     font-size: 14px;
     width: 140px;
 }
 
 .storeSearchForm__select {
-    padding: var(--sf-space-sm);
+    padding: var(--widget-space-sm);
     font-size: 14px;
 }
 

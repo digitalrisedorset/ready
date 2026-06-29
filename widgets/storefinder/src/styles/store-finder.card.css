@@ -1,16 +1,16 @@
 .storeResults {
-    margin-top: var(--sf-space-lg);
+    margin-top: var(--widget-space-lg);
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: var(--sf-space-lg);
+    gap: var(--widget-space-lg);
 }
 
 .storeCard {
-    border: 1px solid var(--sf-color-border);
+    border: 1px solid var(--widget-color-border);
     border-radius: 6px;
-    padding: var(--sf-space-md);
-    background: var(--sf-color-bg);
-    box-shadow: var(--sf-shadow-card);
+    padding: var(--widget-space-md);
+    background: var(--widget-color-bg);
+    box-shadow: var(--widget-shadow-card);
 
     display: flex;
     flex-direction: column;
@@ -18,33 +18,33 @@
 }
 
 .storeCard__header {
-    margin-bottom: var(--sf-space-sm);
+    margin-bottom: var(--widget-space-sm);
 }
 
 .storeCard__title {
     margin: 0;
     font-size: 18px;
     font-weight: 600;
-    color: var(--sf-color-text);
+    color: var(--widget-color-text);
 }
 
 .storeCard__body {
-    margin-bottom: var(--sf-space-md);
+    margin-bottom: var(--widget-space-md);
 }
 
 .storeCard__line {
     margin: 4px 0;
     font-size: 14px;
-    color: var(--sf-color-muted);
+    color: var(--widget-color-muted);
 }
 
 .storeCard__distance {
     margin: 4px 0;
     font-size: 14px;
     font-weight: 600;
-    color: var(--sf-color-primary);
+    color: var(--widget-color-primary);
 }
 
 .storeResults__empty {
-    margin-top: var(--sf-space-lg);
+    margin-top: var(--widget-space-lg);
 }

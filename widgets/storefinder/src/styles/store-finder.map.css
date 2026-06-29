@@ -8,8 +8,8 @@
     top: 100px;
     left: 12px;
 
-    background: var(--sf-color-bg);
-    color: var(--sf-color-text);
+    background: var(--widget-color-bg);
+    color: var(--widget-color-text);
 
     padding: 6px 12px;
     border-radius: 2px;
@@ -17,7 +17,7 @@
     font-size: 13px;
     font-weight: 600;
 
-    box-shadow: var(--sf-shadow-card);
+    box-shadow: var(--widget-shadow-card);
     z-index: 5;
 
     pointer-events: none;
