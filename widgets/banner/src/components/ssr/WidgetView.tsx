@@ -15,8 +15,6 @@ export const WidgetView = ({ rawConfig, runtimeConfig }: Props) => {
 
     if (config.slides.length === 0) return null;
 
-    return  `runtimeConfig ${runtimeConfig.userAgent}`
-
     if (runtimeConfig.userAgent === 'mobile') {
         return <BannerWidgetMobileView slides={config.slides} config={config.settings} />
     }
