@@ -1,39 +1,25 @@
-import {useWidgetConfig} from "./hooks/useWidgetConfig.ts";
 import {useState} from "react";
-import {useMagentoCart} from "./hooks/useMagentoCart.ts";
-import {MinicartTrigger} from "./components/MinicartTrigger.tsx";
-import {
-    backdropStyle,
-    drawerBaseStyle,
-    drawerClosedStyle,
-    drawerOpenStyle
-} from "./components/MinicartUI/minicartStyles.ts";
-import {MinicartHeader} from "./components/MinicartHeader.tsx";
-import {contentStyle, footerStyle} from "./components/MinicartUI/minicartDrawerStyles.ts";
-import {MinicartEmpty} from "./components/MinicartEmpty.tsx";
-import {MinicartItemList} from "./components/MinicartItemList.tsx";
-import {MinicartFooter} from "./components/MinicartFooter.tsx";
-import {Spinner} from "./components/global/Spinner.tsx";
-import {ErrorState} from "./components/global/ErrorState.tsx";
+import {MinicartTrigger} from "./MinicartTrigger.tsx";
+import {backdropStyle, drawerBaseStyle, drawerClosedStyle, drawerOpenStyle} from "./MinicartUI/minicartStyles.ts";
+import {MinicartHeader} from "./MinicartHeader.tsx";
+import {contentStyle, footerStyle} from "./MinicartUI/minicartDrawerStyles.ts";
+import {MinicartEmpty} from "./MinicartEmpty.tsx";
+import {MinicartItemList} from "./MinicartItemList.tsx";
+import {MinicartFooter} from "./MinicartFooter.tsx";
+import {useMagentoCart} from "../hooks/useMagentoCart.ts";
+import type {WidgetConfig} from "./Types.ts";
 
 type Props = {
-    host: HTMLElement;
-    config: unknown
+    config: WidgetConfig
 };
 
-export const MinicartWidgetr = ({ host, config }: Props) => {
+export const MinicartWidget = ({ config }: Props) => {
     const [isOpen, setIsOpen] = useState(false);
-    const {config, error, loading} = useWidgetConfig(host);
-    const {cart} = useMagentoCart(host);
-
-    if (!config) return null;
-    if (error) return <ErrorState />
-    if (loading) return <Spinner />
+    const {cart} = useMagentoCart(config);
 
     const closeCart = () => setIsOpen(false);
 
-    if (!config) return null;
-    if (!cart || !config?.isReady) return null;
+    if (cart === null) return
 
     return (
         <>

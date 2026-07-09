@@ -1,31 +1,42 @@
-import {loadContract} from "./widget-runtime/lib/contractLoader.ts";
-import type {MinicartWidgetConfig} from "./components/Types.ts";
-import {normalizeCurrency} from "./lib/price.ts";
-import type {ResolvedMinicartConfig} from "./hooks/useWidgetConfig.ts";
+import type {WidgetActivity} from "./activity";
+import {parseConfig} from "./ConfigSchema.ts";
+import type {WidgetConfig} from "./components/Types.ts";
+import {normalizeCurrency} from "./lib/currency.ts";
 
 export const WIDGET_ID = 'minicart'
 
-export async function readWidgetConfig(
-    hostElement: HTMLElement
-): Promise<ResolvedMinicartConfig> {
+export function readWidgetConfig(
+    rawConfig: unknown,
+    activity?: WidgetActivity
+): WidgetConfig {
+    try {
+        const contract = parseConfig(rawConfig);
 
-    const contract = await loadContract(hostElement);
+        const resolved = {
+            data: contract.data,
+            currency: normalizeCurrency(contract.runtime.currency),
+            locale: contract.runtime.locale,
+            primaryColor: contract.settings?.primaryColor,
+            secondaryColour: contract.settings?.secondaryColour,
+            isReady: contract.settings?.primaryColor !== ''
+        };;
 
-    const resolved = resolveWidgetConfig(contract);
+        activity?.log(
+            'bootstrap',
+            'Config resolved',
+            resolved
+        );
 
-    return Object.freeze(resolved);
-}
+        return Object.freeze(resolved);
 
-export function resolveWidgetConfig(
-    contract: MinicartWidgetConfig,
-): ResolvedMinicartConfig {
+    } catch (e) {
+        activity?.log(
+            'bootstrap',
+            'Invalid widget contract',
+            e instanceof Error? e.message: e,
+            'error'
+        );
 
-    return {
-        currency: normalizeCurrency(contract.runtime.currency),
-        locale: contract.runtime.locale,
-        primaryColor: contract.settings?.primaryColor,
-        secondaryColour: contract.settings?.secondaryColour,
-        maskedCartId: null,
-        isReady: contract.settings?.primaryColor !== ''
-    };;
+        throw e;
+    }
 }

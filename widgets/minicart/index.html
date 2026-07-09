@@ -1,6 +1,19 @@
+<!DOCTYPE html>
+<html>
 <body>
-<script type="module" src="./src/widget.ts"></script>
 
-<minicart-widget data-contract="/cdn/default.json" />
+<script type="module">
+    import { mount } from './src/widget.ts';
+    import {loadContract} from "./src/lib/contract-resolver.js";
+    const config = await loadContract('default.json')
+    const element = document.querySelector('minicart-widget');
+
+    await requestAnimationFrame(() => {
+        mount(element, config);
+    })
+</script>
+
+<minicart-widget></minicart-widget>
 
 </body>
+</html>

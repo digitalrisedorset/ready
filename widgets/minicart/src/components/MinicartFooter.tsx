@@ -1,13 +1,12 @@
 import { formatPrice } from "../lib/price";
 
-import type {MinicartData} from "./Types.ts";
+import type {MinicartData, WidgetConfig} from "./Types.ts";
 import {footerContainerStyle, footerRowStyle, checkoutButtonStyle} from "./MinicartUI/minicartFooterStyles.ts";
 import {__} from "../lib/i18n.ts";
-import type {ResolvedMinicartConfig} from "../hooks/useWidgetConfig.ts";
 
 interface MinicartHeaderProps {
     cart: MinicartData | null;
-    config: ResolvedMinicartConfig;
+    config: WidgetConfig;
 }
 
 export function MinicartFooter({ cart, config }: MinicartHeaderProps) {

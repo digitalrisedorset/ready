@@ -1,13 +1,18 @@
-import { mountWidget } from "./mountWidget";
-import {loadTranslations} from "./services/translationLoader.ts";
 import {loadMagentoFonts} from "./services/fontLoader.ts";
+import {mountWidget} from "./mountWidget.tsx";
+import {WIDGET_ID} from "./Config.ts";
 
-class MinicartWidget extends HTMLElement {
-    connectedCallback() {
-        loadMagentoFonts();
-        loadTranslations(this);
-        mountWidget(this);
-    }
+import "./styles/widget.css"
+
+const mount = async (el: HTMLElement, config: unknown) => {
+    loadMagentoFonts();
+    await mountWidget(el, config)
 }
 
-customElements.define("minicart-widget", MinicartWidget);
+const api = { mount };
+
+if (typeof window !== 'undefined') {
+    (window as any)[`ReactEdge_${WIDGET_ID}`] = api;
+}
+
+export { mount };

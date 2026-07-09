@@ -7,7 +7,7 @@ ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
 echo "🚀 Building deployment orchestrator"
 
 (
-    cd "$ROOT/deployment/orchestrator"
+    cd "$ROOT/deployment-orchestrator"
     npm run build
 )
 

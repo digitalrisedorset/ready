@@ -12,14 +12,3 @@ export function formatPrice(value: number | string, currency: string, locale: st
         maximumFractionDigits: 2,
     }).format(n);
 }
-
-export function normalizeCurrency(value: any): string {
-    if (typeof value !== "string") return "";
-
-    const cleaned = value.trim().toUpperCase();
-
-    // Basic ISO currency format: 3 letters
-    if (!/^[A-Z]{3}$/.test(cleaned)) return "";
-
-    return cleaned;
-}

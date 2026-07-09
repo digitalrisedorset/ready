@@ -1,3 +1,5 @@
+import type {Currency} from "../lib/currency.ts";
+
 export interface CartItemImage {
     src: string;
     alt: string;
@@ -51,9 +53,10 @@ export interface MinicartSettingsConfig {
     readonly secondaryColour?: string;
 }
 
-export interface MinicartWidgetConfig {
-    readonly data: MinicartDataConfig;
-    readonly runtime: MinicartRuntimeConfig;
-    readonly settings: MinicartSettingsConfig;
-    readonly translations: MinicartTranslationsConfig
+export interface WidgetConfig {
+    data?: MinicartData,
+    currency: Currency;
+    locale: string;
+    primaryColor: string;
+    secondaryColour: string;
 }
