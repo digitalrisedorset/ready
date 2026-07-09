@@ -19,7 +19,7 @@ install_project() {
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
 
 # Core platform
-install_project "$ROOT/deployment/orchestrator"
+install_project "$ROOT/deployment-orchestrator"
 
 # Widgets
 for dir in "$ROOT"/widgets/*; do

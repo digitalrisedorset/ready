@@ -18,9 +18,10 @@ import {ErrorState} from "./components/global/ErrorState.tsx";
 
 type Props = {
     host: HTMLElement;
+    config: unknown
 };
 
-export const MinicartWidgetWrapper = ({ host }: Props) => {
+export const MinicartWidgetr = ({ host, config }: Props) => {
     const [isOpen, setIsOpen] = useState(false);
     const {config, error, loading} = useWidgetConfig(host);
     const {cart} = useMagentoCart(host);
