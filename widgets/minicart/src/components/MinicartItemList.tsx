@@ -7,14 +7,13 @@ import {
 } from "./MinicartUI/minicartUIStyles.ts";
 import {itemImageStyle, itemRowStyle} from "./MinicartUI/minicartStyles.ts";
 import {formatPrice} from "../lib/price.ts";
-import type {MinicartData} from "./Types.ts";
+import type {MinicartData, WidgetConfig} from "./Types.ts";
 import {__} from "../lib/i18n.ts";
 import {RemoveItemUI} from "./RemoveIcon.tsx";
-import type {ResolvedMinicartConfig} from "../hooks/useWidgetConfig.ts";
 
 interface MinicartListProps {
     cart: MinicartData | null;
-    config: ResolvedMinicartConfig;
+    config: WidgetConfig;
 }
 
 export function MinicartItemList({ cart, config }: MinicartListProps) {

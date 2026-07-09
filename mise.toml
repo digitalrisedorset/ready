@@ -4,9 +4,9 @@ min_version = "2025.7.0"
 node = "22"
 python = "3.13"
 
-[tasks."widgets-install"]
-description = "Install all the widgets vite environments"
-run = "./launcher/scripts/widgets-install.sh"
+[tasks."platform-install"]
+description = "Install the widgets vite environments & the orchestrator"
+run = "./launcher/scripts/platform-install.sh"
 
 [tasks.configure]
 description = "Configure ReactEdge integrations"
@@ -16,6 +16,10 @@ run = "./launcher/scripts/widgets-configure.sh"
 description = "Start a widget development server"
 run = "./launcher/scripts/widget-dev.sh {{arg(name='widget', required=true)}}"
 
+[tasks."widget-test"]
+description = "Test a widget locally"
+run = "./launcher/scripts/widget-test.sh {{arg(name='widget', required=true)}}"
+
 [tasks."widget-build"]
 description = "Compiles a widget"
 run = "./launcher/scripts/widget-build.sh {{arg(name='widget', required=true)}}"
@@ -24,6 +28,6 @@ run = "./launcher/scripts/widget-build.sh {{arg(name='widget', required=true)}}"
 description = "Rennder a SSR view for a widget"
 run = "./launcher/scripts/widget-ssr.sh {{arg(name='widget', required=true)}}"
 
-[tasks.deploy]
+[tasks."widgets-deploy"]
 description = "Build the ReactEdge deployment orchestrator"
 run = "./launcher/scripts/widgets-deploy.sh"

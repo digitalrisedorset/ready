@@ -1,14 +1,13 @@
 import {useEffect, useState} from "react";
-import type {MinicartData} from "../components/Types.ts";
+import type {MinicartData, WidgetConfig} from "../components/Types.ts";
 import {loadMagentoCart} from "../services/magentoCartService.ts";
-import {loadContract} from "../widget-runtime/lib/contractLoader.ts";
 
-export function useMagentoCart(hostElement: HTMLElement) {
+export function useMagentoCart(config: WidgetConfig) {
     const [cart, setCart] = useState<MinicartData | null>(null);
 
     useEffect(() => {
         const reload = async () => {
-            const contract = await loadCartFromContract(hostElement);
+            const contract = await loadCartFromConfig(config);
             setCart(contract);
         };
 
@@ -19,7 +18,7 @@ export function useMagentoCart(hostElement: HTMLElement) {
 
     useEffect(() => {
         const loadInitial = async () => {
-            const contract = await loadCartFromContract(hostElement);
+            const contract = await loadCartFromConfig(config);
             setCart(contract);
         };
 
@@ -29,10 +28,10 @@ export function useMagentoCart(hostElement: HTMLElement) {
     return { cart };
 }
 
-async function loadCartFromContract(hostElement: HTMLElement) {
-    const contract = await loadContract(hostElement);
+async function loadCartFromConfig(config: WidgetConfig) {
+    const contract = config.data
     if (contract) {
-        return contract.data;
+        return contract;
     }
 
     const updated = await loadMagentoCart();
