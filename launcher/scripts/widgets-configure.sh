@@ -55,11 +55,6 @@ prompt \
     "https://mageos-docker.magsite.co.uk/graphql"
 
 prompt \
-    "Intent API Base URL" \
-    INTENT_API_BASE_URL \
-    "http://localhost:8000/v1"
-
-prompt \
     "Store Code" \
     STORE_CODE \
     "default"
@@ -73,6 +68,11 @@ prompt \
     "Target site URL" \
     TARGET_SITEURL \
     "https://mageos-docker.magsite.co.uk"
+
+prompt \
+    "Target root" \
+    TARGET_ROOT \
+    "/var/www/docker_mageos/magento"
 
 prompt \
     "Allowed hosts" \
@@ -107,9 +107,6 @@ for dir in "$ROOT"/widgets/*; do
     },
     "magentoGraphql": {
       "api": "$MAGENTO_GRAPHQL_API"
-    },
-    "intentApi": {
-      "baseUrl": "$INTENT_API_BASE_URL"
     }
   },
   "context": {
@@ -126,7 +123,23 @@ echo
 echo "✅ Runtime configuration generated."
 echo "✅ Configuration written to $CONFIG"
 
-source .env
+cat > "$CONFIG" <<EOF
+CLOUDFLARE_TURNSTILE_SITE_KEY=$CLOUDFLARE_TURNSTILE_SITE_KEY
+GOOGLE_MAPS_API_KEY=$GOOGLE_MAPS_API_KEY
+GOOGLE_PLACE_ID=$GOOGLE_PLACE_ID
+MAGENTO_GRAPHQL_API=$MAGENTO_GRAPHQL_API
+STORE_CODE=$STORE_CODE
+SSR_PORT=$SSR_PORT
+TARGET_SITEURL=$TARGET_SITEURL
+TARGET_ROOT=$TARGET_ROOT
+ALLOWED_HOSTS=$ALLOWED_HOSTS
+CATEGORY=$CATEGORY
+SKU=$SKU
+EOF
+
+set -a
+source "$CONFIG"
+set +a
 
 cat > "$ROOT/services/ssr/.env" <<EOF
 SSR_PORT=$SSR_PORT
@@ -135,5 +148,7 @@ EOF
 cat > "$ROOT/deployment-orchestrator/.env.dev" <<EOF
 STORE_CODE=$STORE_CODE
 TARGET_SITEURL=$TARGET_SITEURL
+TARGET_ROOT=$TARGET_ROOT
 ALLOWED_HOSTS=$ALLOWED_HOSTS
 EOF
+

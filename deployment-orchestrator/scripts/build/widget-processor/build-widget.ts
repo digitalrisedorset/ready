@@ -1,13 +1,13 @@
 import { execSync } from 'child_process';
 import path from 'path';
-import {ReportScope} from "../report.ts";
+import {Report} from "../report.ts";
 
 const buildCache = new Set<string>();
 
 export function buildWidget(
     widgetName: string,
     widgetPath: string,
-    report: ReportScope
+    report: Report
 ): void {
 
     if (buildCache.has(widgetName)) {

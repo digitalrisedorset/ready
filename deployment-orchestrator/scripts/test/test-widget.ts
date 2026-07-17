@@ -2,17 +2,14 @@ import { execSync } from 'child_process';
 import path from 'path';
 import {getConfig} from "../config.ts";
 import {Report} from "../build/report.ts";
+import {getReactEdgeRoot} from "../../../packages/widget-build/shared-resources/filesystem/reactedgeRoot.ts";
 
 export function testWidget(
     widgetName: string,
     report: Report
 ): void {
-    const widgetReport =
-        report.createScope(
-            `test-widget-${widgetName}`
-        );
 
-    widgetReport.info(
+    report.info(
         'Testing widget',
         {
             widget: widgetName
@@ -23,7 +20,7 @@ export function testWidget(
 
     try {
         const playwright = path.join(
-            config.projectRoot,
+            getReactEdgeRoot(),
             'node_modules',
             '.bin',
             'playwright'
@@ -32,12 +29,12 @@ export function testWidget(
         execSync(
             `${playwright} test --config=tests/playwright.stage.config.ts widgets/${widgetName}/tests`,
             {
-                cwd: config.projectRoot,
+                cwd: getReactEdgeRoot(),
                 stdio: 'inherit'
             }
         );
 
-        widgetReport.success(
+        report.success(
             'Widget test completed',
             {
                 widget: widgetName
@@ -46,7 +43,7 @@ export function testWidget(
 
     } catch (error) {
 
-        widgetReport.error(
+        report.error(
             'Widget test failed',
             {
                 widget: widgetName

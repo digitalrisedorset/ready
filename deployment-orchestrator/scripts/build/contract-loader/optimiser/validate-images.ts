@@ -1,5 +1,5 @@
 import type {WidgetImageOptimisationConfig} from "../../types.ts";
-import {ReportScope} from "../../report.ts";
+import {Report} from "../../report.ts";
 import {ImageExtractor} from "../data-extractor/images.ts";
 import {ImageOptimiser} from "../data-processor/image-optimiser.ts";
 import {ContractImageTransformer} from "../data-processor/contract-image-transformer.ts";
@@ -24,7 +24,7 @@ export class ContractImageProcessor {
     async transform<T>(
         contract: T,
         config: WidgetImageOptimisationConfig,
-        report: ReportScope
+        report: Report
     ): Promise<T> {
 
         const replacements = new Map<string, string>();
