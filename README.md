@@ -58,8 +58,11 @@ mise run platform-install
 
 ## 5. Configure ReactEdge
 
+```bash
 cp .env.sample .env
-cp -R workspace.sample workspace
+mkdir -p workspace
+cp -R workspace.sample/* workspace/
+```
 
 Generate the local configuration:
 
@@ -195,4 +198,3 @@ Build and publish the widgets:
 ```bash
 mise run widgets-deploy
 ```
-

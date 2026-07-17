@@ -1,7 +1,7 @@
 {
   "banner": {
     "active": true,
-    "cdn": "mageosuk.json",
+    "cdn": "reactedge.json",
     "css": "banner.css",
     "ssr": {
       "strategy": "static"
@@ -19,7 +19,7 @@
   },
   "usp": {
     "active": true,
-    "cdn": "reactedge.json",
+    "cdn": "default.json",
     "css": "usp.css",
     "ssr": {
       "strategy": "static",
@@ -31,14 +31,14 @@
   },
   "storefinder": {
     "active": true,
-    "cdn": "uk.json",
+    "cdn": "default.json",
     "ssr": {
       "strategy": "disabled"
     }
   },
   "productgallery": {
     "active": true,
-    "cdn": "mageosuk.json",
+    "cdn": "default.json",
     "css": "productgallery.css",
     "ssr": {
       "strategy": "dynamic"
