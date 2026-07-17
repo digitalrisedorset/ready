@@ -198,3 +198,22 @@ Build and publish the widgets:
 ```bash
 mise run widgets-deploy
 ```
+
+### Automatic Magento configuration (Docker only)
+
+When `DOCKER_USED=1` in .env, `widgets-deploy` automatically configures Magento after deployment.
+
+The deployment script will:
+
+- configure the Google Maps API key
+- configure the Google Place ID
+- enable server-side rendering
+- enable the selected widgets
+- flush the Magento cache
+
+The default implementation assumes a Docker development environment using the `mageos_php` container.
+
+To disable automatic Magento configuration, set:
+
+```bash
+DOCKER_USED=0
