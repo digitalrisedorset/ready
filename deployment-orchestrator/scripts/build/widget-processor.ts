@@ -31,12 +31,7 @@ export async function processWidget(
     const widgetName =
         resolved.widget || instanceName;
 
-    const widgetReport =
-        report.createScope(
-            `widget.${instanceName}`
-        );
-
-    widgetReport.info(
+    report.info(
         'Widget processing started',
         {
             widget: instanceName,
@@ -46,14 +41,14 @@ export async function processWidget(
 
     try {
         const widgetPath = getWidgetPath(widgetName);
-        buildWidget(widgetName, widgetPath, widgetReport);
+        buildWidget(widgetName, widgetPath, report);
 
-        const registryResult = updateAssetRegistry(widgetName, instanceName, widgetReport);
-        let contractResult = await loadContract(widgetName, registryResult.cdn, widgetReport);
+        const registryResult = updateAssetRegistry(widgetName, instanceName, report);
+        let contractResult = await loadContract(widgetName, registryResult.cdn, report);
 
         if (contractResult === null) {
 
-            widgetReport.error(
+            report.error(
                 'Contract not found'
             );
 
@@ -68,7 +63,7 @@ export async function processWidget(
             contractResult = await imageProcessor.transform(
                 contractResult,
                 resolved.imageOptimisation,
-                widgetReport
+                report
             );
         }
 
@@ -80,7 +75,7 @@ export async function processWidget(
                 resolved.ssr.variants ?? ['desktop'];
 
             for (const variant of variants) {
-                widgetReport.info(
+                report.info(
                     `SSR variant ${variant} started`,
                     {
                         widget: instanceName,
@@ -92,7 +87,7 @@ export async function processWidget(
                         widgetName,
                         contractFile,
                         variant,
-                        widgetReport
+                        report
                     );
             }
         }
@@ -112,16 +107,16 @@ export async function processWidget(
             contractFile
         };
 
-        manifestResult = writeManifest(manifest, instanceName, widgetReport);
+        manifestResult = writeManifest(manifest, instanceName, report);
 
-        widgetReport.complete(
+        report.info(
             'Widget Manifest',
             {
                 manifest
             }
         );
 
-        widgetReport.success(
+        report.success(
             'Widget processing completed',
             {
                 widget: instanceName
@@ -129,7 +124,7 @@ export async function processWidget(
         );
     }
     catch (error) {
-        widgetReport.error(
+        report.error(
             'Widget processing failed',
             {
                 widget: instanceName,
@@ -137,7 +132,7 @@ export async function processWidget(
             }
         );
     } finally {
-        widgetReport.end();
+
     }
 
     return {

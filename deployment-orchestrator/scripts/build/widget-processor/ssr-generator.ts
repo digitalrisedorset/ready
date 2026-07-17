@@ -3,7 +3,7 @@
  */
 import fs from "fs";
 import path from "path";
-import {ReportScope} from "../report.ts";
+import {Report} from "../report.ts";
 import {getContractPath, getWidgetPath} from "../paths.ts";
 import {exec} from "node:child_process";
 import {resolveContractTags} from "../contract-loader/wrapper.ts";
@@ -15,7 +15,7 @@ export async function generateSsr(
     widgetName: string,
     contractFile: string,
     variant: SsrVariant,
-    report: ReportScope
+    report: Report
 ): Promise<string | null> {
 
     const config = getConfig()

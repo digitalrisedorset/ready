@@ -37,11 +37,6 @@ export async function rebuildRegistry(
             )
         );
 
-    await runCiVerification(
-        selectedWidgets,
-        report
-    );
-
     report.success(
         'Widget processing completed',
         {
@@ -54,5 +49,4 @@ export async function rebuildRegistry(
     );
 
     report.renderConsole()
-    report.publishSummary();
 }

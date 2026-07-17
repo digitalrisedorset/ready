@@ -4,7 +4,7 @@
 import type {ContractResult, ContractWrapper} from "../types.ts";
 import fs from "fs";
 import {getContractPath} from "../paths.ts";
-import {ReportScope} from "../report.ts";
+import {Report} from "../report.ts";
 import {getFilename} from "../util.ts";
 import {validateContract} from "../contract-loader/validator.ts";
 import {wrapContract} from "../contract-loader/wrapper.ts";
@@ -12,7 +12,7 @@ import {wrapContract} from "../contract-loader/wrapper.ts";
 export async function loadContract(
     widgetName: string,
     cdn: string,
-    report: ReportScope
+    report: Report
 ): Promise<ContractResult> {
     let contract = null;
 
