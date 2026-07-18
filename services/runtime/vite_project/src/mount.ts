@@ -88,6 +88,12 @@ function shouldMountWidgets(): boolean {
     return true;
 }
 
+function getDebugMode(): string | null {
+    const params = new URLSearchParams(window.location.search);
+
+    return params.get('reactedge_debug');
+}
+
 export async function mountWidget(el: HTMLElement) {
     const { type, entry } = getResolvedEntry(el);
 
@@ -112,7 +118,6 @@ export async function mountWidget(el: HTMLElement) {
         } else {
             mod.mount(el, null, runtimeConfig);
         }
-        }
     }
 }
 
@@ -123,11 +128,18 @@ function getWidgetType(el: HTMLElement) {
 export function scheduleWidgets() {
     const widgets = document.querySelectorAll<HTMLElement>('[data-load]');
 
+    const debugMode = getDebugMode();
+
     widgets.forEach(el => {
         const name = getWidgetType(el)
         if (!name) return;
 
         const mode = el.dataset.load || 'lazy';
+
+        if (debugMode === 'eager' && mode !== 'ssr') {
+            mountWidget(el);
+            return;
+        }
 
         if (mode === 'ssr') {
             return;

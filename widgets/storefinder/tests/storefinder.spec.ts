@@ -4,7 +4,7 @@ test.describe('StoreFinder Widget', () => {
     let widget;
 
     test.beforeEach(async ({ page }) => {
-        await page.goto('/');
+        await page.goto('/?reactedge_debug=eager');
         widget = page.locator('storefinder-widget');
     });
 
