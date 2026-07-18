@@ -1,9 +1,9 @@
 import { useState } from "react";
-import { BannerSlide } from "./BannerSlide.tsx";
-import { NavigationDots } from "./NavigationDots.tsx";
-import { NavigationArrows } from "./NavigationArrows.tsx";
 import type { BannerSliderProps } from "./Types.ts";
 import {useActivityContext} from "../activity/Context/useActivityContext.ts";
+import {BannerSlide} from "./BannerSlide.tsx";
+import {NavigationArrows} from "./NavigationArrows.tsx";
+import {NavigationDots} from "./NavigationDots.tsx";
 
 export const BannerSlider = ({ slides, config, visibleSlides }: BannerSliderProps) => {
     const [currentIndex, setCurrentIndex] = useState(0);
@@ -34,16 +34,20 @@ export const BannerSlider = ({ slides, config, visibleSlides }: BannerSliderProp
                             : "re-banner-track--single"
                     }`}
                 >
-                    {slides.slice(start, end).map((slide, i) => (
-                        <BannerSlide
-                            key={`${start}-${i}`}
-                            slide={slide}
-                            isActive={false}
-                            tileMode={tileMode}
-                            visibleSlides={visibleSlides}
-                            zoomActive={config.zoomActive}
-                        />
-                    ))}
+                   {slides.slice(start, end).map((slide, i) => {
+                       const absoluteIndex = start + i;
+
+                       return (
+                           <BannerSlide
+                               key={absoluteIndex}
+                               slide={slide}
+                               isActive={currentIndex === absoluteIndex}
+                               tileMode={tileMode}
+                               visibleSlides={visibleSlides}
+                               zoomActive={config.zoomActive}
+                           />
+                       );
+                   })}
 
                     <NavigationArrows
                         current={currentIndex}

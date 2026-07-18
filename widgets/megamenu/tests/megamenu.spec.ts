@@ -1,28 +1,31 @@
 import { test, expect } from '@playwright/test';
+import {WIDGET_ID} from "../src/Config";
 
 test.describe('Megamenu widget (WordPress embed)', () => {
-    test.beforeEach(async ({ page }) => {
+    let widget;
+
+    test.beforeEach(async ({page}) => {
         await page.goto('/?reactedge_debug=eager');
+        widget = page.locator(`${WIDGET_ID}-widget`);
+        await expect(widget).toBeVisible();
     });
 
     test('Megamenu widget mounts', async ({page}) => {
-        const widget = page.locator('megamenu-widget');
         await expect(widget).toBeAttached();
     });
 
     test('Megamenu renders top-level items', async ({page}) => {
-        await expect(page.getByText('Home')).toBeVisible();
-        await expect(page.getByText('Women')).toBeVisible();
+        await expect(widget.getByText('Men').first()).toBeVisible();
+        await expect(widget.getByText('Women')).toBeVisible();
     });
 
     test('Megamenu renders CTA item', async ({page}) => {
-        const cta = page.getByText('Gear');
+        const cta = widget.getByText('Gear');
         await expect(cta).toBeVisible();
     });
 
     test('Megamenu shows submenu on interaction', async ({page}) => {
-        const menu = await page.locator('megamenu-widget')
-        await menu.getByText('Women').click();
-        await expect(menu.getByText('Bras & Tanks')).toBeVisible();
+        await widget.getByText('Women').click();
+        await expect(widget.getByText('Bras & Tanks')).toBeVisible();
     });
 });

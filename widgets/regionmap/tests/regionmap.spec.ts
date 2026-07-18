@@ -1,11 +1,13 @@
 import { test, expect } from '@playwright/test';
+import {WIDGET_ID} from "../src/Config";
 
 test.describe('RegionMap Widget', () => {
     let widget;
 
-    test.beforeEach(async ({ page }) => {
+    test.beforeEach(async ({page}) => {
         await page.goto('/?reactedge_debug=eager');
-        widget = page.locator('regionmap-widget');
+        widget = page.locator(`${WIDGET_ID}-widget`);
+        await expect(widget).toBeVisible();
     });
 
     test('mounts successfully', async () => {
@@ -13,7 +15,7 @@ test.describe('RegionMap Widget', () => {
     });
 
     test('renders map container', async () => {
-        const container = widget.locator('.re-regionmap');
+        const container = widget.locator('[data-widget="regionmap"]')
         await expect(container).toBeVisible();
     });
 

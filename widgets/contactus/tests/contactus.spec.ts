@@ -1,90 +1,70 @@
 import { test, expect } from '@playwright/test';
+import {WIDGET_ID} from "../src/Config";
 
-test('ContactUs mounts successfully', async ({ page }) => {
-    await page.goto('/?reactedge_debug=eager');
+test.describe('ContactUs Widget', () => {
+    let widget;
 
-    const widget = page.locator('contactus-widget');
-    await expect(widget).toBeVisible();
-});
+    test.beforeEach(async ({page}) => {
+        await page.goto('/?reactedge_debug=eager');
+        widget = page.locator(`${WIDGET_ID}-widget`);
+        await expect(widget).toBeVisible();
+    });
 
-test('ContactUs renders configured title', async ({ page }) => {
-    await page.goto('/');
+    test('ContactUs renders configured title', async ({page}) => {
+        const title = widget.locator('[data-contact-title]');
+        await expect(title).toBeVisible();
+        await expect(title).not.toHaveText('');
+    });
 
-    const widget = page.locator('contactus-widget');
-    await expect(widget).toBeVisible();
+    test('ContactUs renders at least one field', async ({page}) => {
+        const fields = widget.locator('[data-contact-field]');
 
-    const title = widget.locator('[data-contact-title]');
-    await expect(title).toBeVisible();
-    await expect(title).not.toHaveText('');
-});
+        await expect(fields).toHaveCount(3);
+    });
 
-test('ContactUs renders at least one field', async ({ page }) => {
-    await page.goto('/');
+    test('ContactUs renders submit button', async ({page}) => {
+        const submit = widget.locator('[data-contact-submit]');
 
-    const widget = page.locator('contactus-widget');
-    const fields = widget.locator('[data-contact-field]');
+        await expect(submit).toBeVisible();
+    });
 
-    await expect(fields).toHaveCount(3);
-});
+    test('ContactUs renders Turnstile container', async ({page}) => {
+        const turnstile = page.locator('#contactus-turnstile');
+        await expect(turnstile).toBeVisible();
+    });
 
-test('ContactUs renders submit button', async ({ page }) => {
-    await page.goto('/');
+    test('ContactUs submit remains disabled after filling fields (without Turnstile)', async ({page}) => {
+        const submit = widget.locator('[data-contact-submit]');
+        await expect(submit).toBeVisible();
+        await expect(submit).toBeDisabled();
 
-    const widget = page.locator('contactus-widget');
-    const submit = widget.locator('[data-contact-submit]');
+        const fields = widget.locator('[data-contact-field]');
+        const count = await fields.count();
 
-    await expect(submit).toBeVisible();
-});
+        for (let i = 0; i < count; i++) {
+            const input = fields.nth(i);
+            const type = await input.getAttribute('type');
 
-test('ContactUs renders Turnstile container', async ({ page }) => {
-    await page.goto('/');
-
-    const widget = page.locator('contactus-widget');
-    await expect(widget).toBeVisible();
-
-    const turnstile = page.locator('#contactus-turnstile');
-    await expect(turnstile).toBeVisible();
-});
-
-test('ContactUs submit remains disabled after filling fields (without Turnstile)', async ({ page }) => {
-    await page.goto('/');
-
-    const widget = page.locator('contactus-widget');
-    await expect(widget).toBeVisible();
-
-    const submit = widget.locator('[data-contact-submit]');
-    await expect(submit).toBeVisible();
-    await expect(submit).toBeDisabled();
-
-    const fields = widget.locator('[data-contact-field]');
-    const count = await fields.count();
-
-    for (let i = 0; i < count; i++) {
-        const input = fields.nth(i);
-        const type = await input.getAttribute('type');
-
-        if (type === 'email') {
-            await input.fill('jane@test.com');
-        } else {
-            await input.fill('test');
+            if (type === 'email') {
+                await input.fill('jane@test.com');
+            } else {
+                await input.fill('test');
+            }
         }
-    }
 
-    await expect(submit).toBeDisabled();
-});
+        await expect(submit).toBeDisabled();
+    });
 
-test('ContactUs submit enables when Turnstile token is present', async ({ page }) => {
-    await page.goto('/');
+    test('ContactUs submit enables when Turnstile token is present', async ({page}) => {
+        const submit = widget.locator('[data-contact-submit]');
+        const fields = widget.locator('[data-contact-field]');
 
-    const widget = page.locator('contactus-widget');
-    const submit = widget.locator('[data-contact-submit]');
-    const fields = widget.locator('[data-contact-field]');
-
-    // Fill fields
-    const count = await fields.count();
-    for (let i = 0; i < count; i++) {
-        const input = fields.nth(i);
-        const type = await input.getAttribute('type');
-        await input.fill(type === 'email' ? 'jane@test.com' : 'test');
-    }
+        // Fill fields
+        const count = await fields.count();
+        for (let i = 0; i < count; i++) {
+            const input = fields.nth(i);
+            const type = await input.getAttribute('type');
+            await input.fill(type === 'email' ? 'jane@test.com' : 'test');
+        }
+    });
 });
