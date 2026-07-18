@@ -4,7 +4,7 @@ test.describe('RegionMap Widget', () => {
     let widget;
 
     test.beforeEach(async ({ page }) => {
-        await page.goto('/fixtures/regionmap.html');
+        await page.goto('/?reactedge_debug=eager');
         widget = page.locator('regionmap-widget');
     });
 

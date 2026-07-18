@@ -4,8 +4,7 @@ test.describe('USP Widget', () => {
     let googlereviews;
 
     test.beforeEach(async ({ page }) => {
-        await page.goto('/');
-        //await page.goto('/fixtures/googlereviews.html');
+        await page.goto('/?reactedge_debug=eager');
         googlereviews = page.locator('googlereviews-widget');
         await expect(googlereviews).toBeVisible();
     });

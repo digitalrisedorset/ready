@@ -2,7 +2,7 @@ import { test, expect } from '@playwright/test';
 
 test.describe('Megamenu widget (WordPress embed)', () => {
     test.beforeEach(async ({ page }) => {
-        await page.goto('/');
+        await page.goto('/?reactedge_debug=eager');
     });
 
     test('Megamenu widget mounts', async ({page}) => {

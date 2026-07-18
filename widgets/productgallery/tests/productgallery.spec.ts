@@ -4,7 +4,7 @@ test.describe('Product Gallery Widget', () => {
     let widget;
 
     test.beforeEach(async ({ page }) => {
-        await page.goto('/');
+        await page.goto('/?reactedge_debug=eager');
         widget = page.locator('productgallery-widget');
         await expect(widget).toBeVisible();
     });

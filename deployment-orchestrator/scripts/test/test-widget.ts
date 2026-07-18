@@ -16,8 +16,6 @@ export function testWidget(
         }
     );
 
-    const config = getConfig()
-
     try {
         const playwright = path.join(
             getReactEdgeRoot(),
@@ -30,7 +28,13 @@ export function testWidget(
             `${playwright} test --config=tests/playwright.stage.config.ts widgets/${widgetName}/tests`,
             {
                 cwd: getReactEdgeRoot(),
-                stdio: 'inherit'
+                stdio: 'inherit',
+                env: {
+                    ...process.env,
+                    ...(process.env.PWDEBUG === '1' && {
+                        PWDEBUG: '1'
+                    })
+                }
             }
         );
 

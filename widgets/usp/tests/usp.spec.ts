@@ -4,8 +4,7 @@ test.describe('USP Widget', () => {
     let usp;
 
     test.beforeEach(async ({ page }) => {
-        await page.goto('/');
-        //await page.goto('/fixtures/usp.html');
+        await page.goto('/?reactedge_debug=eager');
         usp = page.locator('usp-widget');
         await expect(usp).toBeVisible();
     });

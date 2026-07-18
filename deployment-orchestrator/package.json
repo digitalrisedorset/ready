@@ -1,7 +1,8 @@
 {
   "type": "module",
   "scripts": {
-    "build": "node scripts/deploy.ts"
+    "build": "node scripts/deploy.ts",
+    "test": "node scripts/test.ts"
   },
   "devDependencies": {
     "@types/node": "^25.6.0"

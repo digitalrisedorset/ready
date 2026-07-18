@@ -4,7 +4,7 @@ test.describe('Banner Widget', () => {
     let banner;
 
     test.beforeEach(async ({ page }) => {
-        await page.goto('/');
+        await page.goto('/?reactedge_debug=eager');
         banner = page.locator('banner-widget');
         await expect(banner).toBeVisible();
     });

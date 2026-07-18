@@ -1,7 +1,7 @@
 import { test, expect } from '@playwright/test';
 
 test('ContactUs mounts successfully', async ({ page }) => {
-    await page.goto('/');
+    await page.goto('/?reactedge_debug=eager');
 
     const widget = page.locator('contactus-widget');
     await expect(widget).toBeVisible();
