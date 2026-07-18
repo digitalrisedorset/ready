@@ -6,7 +6,7 @@ WIDGET="${1:-}"
 
 if [ -z "$WIDGET" ]; then
   echo "Usage:"
-  echo "  mise run widget-test -- <widget>"
+  echo "  mise run widget-test -- <widget> [debug]"
   exit 1
 fi
 
@@ -25,7 +25,14 @@ trap cleanup EXIT INT TERM
 
 cd "$ROOT"
 
-PWDEBUG=1 ./node_modules/.bin/playwright \
+
+PWDEBUG=0
+
+if [[ "${2:-}" == "debug" ]]; then
+    PWDEBUG=1
+fi
+
+PWDEBUG=$PWDEBUG ./node_modules/.bin/playwright \
     test \
     --config=tests/playwright.dev.config.ts \
     "widgets/$WIDGET/tests"

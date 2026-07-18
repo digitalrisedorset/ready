@@ -1,7 +1,7 @@
 import type { BannerSlideProps } from "./Types";
 import {ZoomableImage} from "./BannerSlide/ZoomableImage.tsx";
 
-export const BannerSlide = ({ slide, visibleSlides = 1, tileMode, zoomActive }: BannerSlideProps) => {
+export const BannerSlide = ({ slide, isActive, visibleSlides = 1, tileMode, zoomActive }: BannerSlideProps) => {
     const { image, title } = slide;
 
     const wrapperStyle = tileMode
@@ -36,6 +36,8 @@ export const BannerSlide = ({ slide, visibleSlides = 1, tileMode, zoomActive }: 
         <div
             className={`re-banner-slide ${tileMode ? "re-banner-slide--tile" : ""}`}
             style={wrapperStyle}
+            data-banner-slide
+            data-banner-active={isActive || undefined}
         >
             <ZoomableImage {...props} />
         </div>

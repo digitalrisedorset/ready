@@ -43,7 +43,7 @@ export function resolveConfig(
     runtime: SchemaRuntimeConfig
 ): WidgetConfig {
     return {
-        ...widget,
+        ...widget.data,
         endpoint: widget.data.endpoint,
         fields: widget.data.fields.map((field) => {
            return normalizeOptionalFields(field, ['type'])

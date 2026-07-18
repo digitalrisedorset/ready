@@ -37,23 +37,25 @@ export function RegionMap({ title, region, center, zoom }: RegionMapProps) {
     return (
         <LoadScript googleMapsApiKey={googleMapsApiKey}>
             {title && <h3 data-regionmap-title>{title}</h3>}
-            <GoogleMap
-                mapContainerStyle={containerStyle}
-                center={center}
-                zoom={zoom}
-                options={{
-                    mapTypeControl: false,
-                    streetViewControl: false,
-                    fullscreenControl: false
-                }}
-            >
-                {region && region.length > 0 && (
-                    <Polygon
-                        path={region}
-                        options={polygonOptions}
-                    />
-                )}
-            </GoogleMap>
+            <div data-widget="regionmap">
+                <GoogleMap
+                    mapContainerStyle={containerStyle}
+                    center={center}
+                    zoom={zoom}
+                    options={{
+                        mapTypeControl: false,
+                        streetViewControl: false,
+                        fullscreenControl: false
+                    }}
+                >
+                    {region && region.length > 0 && (
+                        <Polygon
+                            path={region}
+                            options={polygonOptions}
+                        />
+                    )}
+                </GoogleMap>
+            </div>
         </LoadScript>
     );
 }
