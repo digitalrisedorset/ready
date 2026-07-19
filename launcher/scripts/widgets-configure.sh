@@ -103,7 +103,29 @@ prompt \
     SKU \
     "WJ12"
 
+prompt \
+    "Enable widget SSR (0 or 1)" \
+    SSR_ENABLED \
+    "1"
+
+if [[ "$SSR_ENABLED" == "1" ]]; then
+    prompt \
+        "SSR port" \
+        SSR_PORT \
+        "4000"
+
+    prompt \
+        "SSR base URL" \
+        SSR_BASE_URL \
+        "https://widgets-ssr.co.uk"
+fi
+
 echo
+
+prompt \
+    "Allow self-signed SSL certificates (development only)" \
+    ALLOW_SELF_SIGNED_SSL \
+    "true"
 
 for dir in "$ROOT"/widgets/*; do
     if [[ -d "$dir" && -d "$dir/public" ]]; then
@@ -146,6 +168,9 @@ STORE_CODE=$STORE_CODE
 TARGET_SITEURL=$TARGET_SITEURL
 TARGET_ROOT=$TARGET_ROOT
 ALLOWED_HOSTS=$ALLOWED_HOSTS
+SSR_ENABLED=$SSR_ENABLED
+SSR_PORT=$SSR_PORT
+SSR_BASE_URL=$SSR_BASE_URL
 CATEGORY=$CATEGORY
 SKU=$SKU
 EOF
@@ -153,6 +178,10 @@ EOF
 set -a
 source "$CONFIG"
 set +a
+
+cat > "$ROOT/services/ssr/.env" <<EOF
+SSR_PORT=$SSR_PORT
+EOF
 
 cat > "$ROOT/deployment-orchestrator/.env.dev" <<EOF
 STORE_CODE=$STORE_CODE
