@@ -31,8 +31,22 @@ if [[ "${DOCKER_USED:-1}" == "1" ]]; then
     docker exec mageos_php \
         bin/magento config:set reactedge/google_maps/place_id "$GOOGLE_PLACE_ID"
 
-    docker exec mageos_php \
-        bin/magento config:set reactedge/widgets_ssr/enabled 1
+   docker exec mageos_php \
+       bin/magento config:set \
+       reactedge/widgets_ssr/enabled \
+       "$SSR_ENABLED"
+
+   if [ "$SSR_ENABLED" = "1" ]; then
+       docker exec mageos_php \
+           bin/magento config:set \
+           reactedge/widgets_ssr/base_url \
+           "$SSR_BASE_URL"
+   else
+       docker exec mageos_php \
+           bin/magento config:set \
+           reactedge/widgets_ssr/base_url \
+           ""
+   fi
 
     ALL_WIDGETS=(
         banner
