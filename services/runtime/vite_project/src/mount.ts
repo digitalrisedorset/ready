@@ -103,6 +103,23 @@ export async function mountWidget(el: HTMLElement) {
     if (mod?.mount) {
         const runtimeConfig = buildRuntimeConfig()
 
+        const debugMode = getDebugMode();
+
+        if (debugMode === 'runtime') {
+            console.group(`[ReactEdge] ${type}`);
+
+            console.log('Element:', el);
+            console.log('Registry entry:', entry);
+            console.log('Contract:', entry?.contract);
+            console.log('Runtime:', runtimeConfig);
+            console.log(
+                'Runtime node:',
+                document.getElementById('reactedge-runtime')
+            );
+
+            console.groupEnd();
+        }
+
         if (!shouldMountWidgets()) {
             console.info('[ReactEdge] CSR mount skipped', {
                 widget: entry?.widget,

@@ -29,7 +29,9 @@ export function readWidgetConfig(
     runtimeConfig: unknown,
     activity: WidgetActivity
 ): WidgetConfig {
+    activity.log('bootstrap', 'Config Sent', rawConfig);
     const contract = parseConfig(rawConfig);
+    activity.log('bootstrap', 'Config RuntimeConfig Sent', runtimeConfig);
     const runtime = parseRuntimeConfig(runtimeConfig)
     const resolved = resolveConfig(contract, runtime);
 
