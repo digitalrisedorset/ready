@@ -1,15 +1,17 @@
 import { mountWidget } from "./mountWidget.tsx";
 import { WIDGET_ID } from "./Config.ts";
+
 import type { WidgetApi } from "../../../packages/widget-build/shared-resources/public-api/widget";
+import type {ReactEdgeRuntimeConfig} from "../../../packages/widget-build/shared-resources/public-api/runtime.ts";
 
 import "./styles/widget.css";
 
 const mount = async (
     el: HTMLElement,
-    config: unknown,
-    runtime: unknown
+    rawConfig: unknown,
+    _runtime: ReactEdgeRuntimeConfig
 ) => {
-    await mountWidget(el, config, runtime);
+    await mountWidget(el, rawConfig);
 };
 
 const api: WidgetApi = {

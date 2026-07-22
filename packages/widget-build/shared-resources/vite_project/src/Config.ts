@@ -1,76 +1,73 @@
-import type {
-    GoogleReviewsWidgetConfig,
-    ReactEdgeRuntimeConfig,
-    WidgetConfig
-} from "./domain/googlereviews.types.ts";
+import {type UspSettings, type UspSlideData} from "./components/Types.ts";
+import {parseConfig} from "./ConfigSchema.ts";
 import type {WidgetActivity} from "./activity";
 
-export const WIDGET_ID = 'googlereviews';
+export interface WidgetConfig {
+    /**
+     * Structured banner payload.
+     * Shape is banner-owned and opaque to the platform.
+     */
+    readonly data: {
+        slides: UspSlideData[]
+    }
+
+    readonly settings: UspSettings;
+}
+
+export interface RuntimeConfig {
+    rendering: {
+        userAgent: string;
+    }
+}
 
 export interface RawWidgetConfig {
-    data: {
-        country: string;
-        title: string;
-    };
-    integration: {
-        requires: ('googleMaps')[];
-    };
+    readonly data: {
+        slides: UspSlideData[]
+    }
+
+    readonly settings: UspSettings;
 }
 
+export const WIDGET_ID = 'usp';
+
+/**
+ * Validates the widget contract and returns an immutable configuration.
+ *
+ * The contract is treated as untrusted input and is validated before
+ * being exposed to the React application.
+ *
+ * This function represents the trust boundary between the ReactEdge
+ * runtime and the widget implementation for widgets that do not require
+ * runtime integrations.
+ *
+ * @param rawConfig - Widget contract supplied by the host platform.
+ * @param activity - Optional activity logger used during bootstrap.
+ * @returns An immutable widget configuration.
+ * @throws When the widget contract is invalid.
+ */
 export function readWidgetConfig(
-    rawConfig: RawWidgetConfig,
-    runtimeConfig: ReactEdgeRuntimeConfig,
-    activity: WidgetActivity
+    rawConfig: unknown,
+    activity?: WidgetActivity
 ): WidgetConfig {
-    const resolved = resolveGoogleReviewsConfig(rawConfig, runtimeConfig);
-
-    activity.log('bootstrap', 'Config resolved', {
-        data: resolved.data,
-        integrations: resolved.integrations,
-        translations: resolved.translations
-    });
-
-    return Object.freeze(resolved);
-}
-
-export function readIntegrationConfig(): ReactEdgeRuntimeConfig {
-    const configScript = document.getElementById('reactedge-runtime');
-
-    if (!configScript) {
-        throw new Error(`${WIDGET_ID} widget requires a <script id='reactedge-runtime'> block.`);
-    }
-
-    let config: ReactEdgeRuntimeConfig;
     try {
-        config = JSON.parse(configScript.textContent);
-    } catch {
-        throw new Error(`${WIDGET_ID}: reactedge-runtime contains invalid JSON`);
+        const contract = parseConfig(rawConfig);
+
+        activity?.log(
+            'bootstrap',
+            'Config resolved',
+            contract
+        );
+
+        return Object.freeze(contract);
+
+    } catch (e) {
+        activity?.log(
+            'bootstrap',
+            'Invalid widget contract',
+            e instanceof Error? e.message: e,
+            'error'
+        );
+
+        throw e;
     }
-
-    // if (!config.integrations?.googleMaps?.apiKey) {
-    //     throw new Error(`${WIDGET_ID}: googleMaps missing in reactedge-runtime`);
-    // }
-
-    return config;
-}
-
-export function resolveGoogleReviewsConfig(
-    widget: GoogleReviewsWidgetConfig,
-    runtime: ReactEdgeRuntimeConfig
-): WidgetConfig {
-
-    if (
-        widget.integration?.requires?.includes('googleMaps') &&
-        !runtime.integrations?.googleMaps?.apiKey
-    ) {
-        throw new Error(`[${WIDGET_ID}] googleMaps integration required but not configured`);
-    }
-
-    return {
-        data: widget.data,
-        integrations: {
-            googleMaps: runtime.integrations?.googleMaps
-        },
-        translations: widget.translations
-    };
 }

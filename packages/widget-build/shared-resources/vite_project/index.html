@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<script type="module">
+    import { mount } from './src/widget.ts';
+    import {loadContract} from "./src/lib/contract-resolver.js";
+    const config = await loadContract('default.json')
+    const element = document.querySelector('usp-widget');
+
+    await requestAnimationFrame(() => {
+        mount(element, config);
+    })
+</script>
+
+<usp-widget></usp-widget>
+
+</body>
+</html>
