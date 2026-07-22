@@ -2,7 +2,7 @@
   "data": {
     "title": "Contact us",
     "intro": "Got a question about or business? Our friendly team is here to help. Reach out today—we’ll reply within one business day.",
-    "endpoint": "https://scsolarltd.co.uk/wp-json/contact/v1/send",
+    "endpoint": "/wp-json/contact/v1/send",
     "categories": [
       {
         "value": "general",

@@ -24,6 +24,9 @@ install_project "$ROOT/deployment-orchestrator"
 # Root platform
 install_project "$ROOT"
 
+# Runtime Orchestrator
+install_project "$ROOT/services/runtime/vite_project"
+
 # Widgets
 for dir in "$ROOT"/widgets/*; do
     [[ -d "$dir" ]] && install_project "$dir"

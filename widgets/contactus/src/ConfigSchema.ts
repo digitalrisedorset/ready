@@ -20,13 +20,13 @@ export const ContactFieldSchema = z.object({
         "email",
         "textarea"
     ]).optional(),
-    required: z.boolean()
+    required: z.boolean().default(false)
 }).strict();
 
 export const WidgetDataConfigSchema = z.object({
     title: z.string(),
     intro: z.string(),
-    endpoint: z.string().url(),
+    endpoint: z.string(),
 
     categories: z.array(ContactCategorySchema),
 
