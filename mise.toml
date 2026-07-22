@@ -8,6 +8,10 @@ python = "3.13"
 description = "Install the widgets vite environments & the orchestrator"
 run = "./launcher/scripts/platform-install.sh"
 
+[tasks."widgets-update"]
+description = "Update the widgets vite environments"
+run = "./launcher/scripts/widgets-update.sh"
+
 [tasks."serve"]
 description = "Expose the ReactEdge workspace over HTTP"
 run = "./launcher/scripts/widgets-serve.sh"
