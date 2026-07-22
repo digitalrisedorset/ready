@@ -217,3 +217,19 @@ To disable automatic Magento configuration, set:
 
 ```bash
 DOCKER_USED=0
+```
+
+### Creating a widget with ChatGPT
+
+To scaffold a new widget with ChatGPT, start a fresh conversation and attach:
+
+* `widget-spec.md`
+* the shared `packages/widget-build/shared-resources/vite_project` folder as a zip archive
+
+Then use the following prompt:
+
+```text
+Create a widget called widget01.
+
+Follow widget-spec.md exactly.
+```
