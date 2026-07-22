@@ -13,12 +13,6 @@ export const WidgetView = ({ rawConfig, runtimeConfig }: Props) => {
 
     if (!config) return null;
 
-    if (config.data.slides.length === 0) return <Spinner />;
-
-    if (runtimeConfig.rendering.userAgent === 'mobile') {
-        return <UspMobileWidget config={config} slides={config.data.slides} />
-    }
-
     return <UspWidget config={config}  />
 };
 
