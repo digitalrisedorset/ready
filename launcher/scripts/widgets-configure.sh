@@ -33,6 +33,12 @@ prompt() {
     fi
 }
 
+echo "========================================"
+echo "ReactEdge Configuration"
+echo "========================================"
+echo
+echo "Press ENTER to accept the default value."
+echo
 
 #read -rp "Cloudflare Turnstile Site Key (optional): " CLOUDFLARE_KEY
 #read -rp "Google Maps API Key (optional): " GOOGLE_MAPS_API_KEY
@@ -45,14 +51,16 @@ prompt() {
 #STORE_CODE=${STORE_CODE:-default}
 #read -rp "Category [tops-men]: " CATEGORY
 #CATEGORY=${CATEGORY:-tops-men}
-prompt "Cloudflare Turnstile Site Key" CLOUDFLARE_TURNSTILE_SITE_KEY ""
-prompt "Google Maps API Key" GOOGLE_MAPS_API_KEY ""
-prompt "Google Place ID" GOOGLE_PLACE_ID ""
+
+echo
+echo "Platform"
+echo "--------"
+echo "Configure the website where ReactEdge will run."
 
 prompt \
-    "Magento GraphQL API" \
-    MAGENTO_GRAPHQL_API \
-    "https://mageos-docker.magsite.co.uk/graphql"
+    "Site URL" \
+    SITEURL \
+    "https://mageos-docker.magsite.co.uk"
 
 prompt \
     "Store Code" \
@@ -60,14 +68,29 @@ prompt \
     "default"
 
 prompt \
-    "Target site URL" \
-    TARGET_SITEURL \
-    "https://mageos-docker.magsite.co.uk"
-
-prompt \
-    "Target root" \
+    "Platform root directory" \
     TARGET_ROOT \
     "/var/www/docker_mageos/magento"
+
+echo
+echo "External Services"
+echo "-----------------"
+echo "Only configure the services required by the widgets you intend to use."
+
+prompt \
+    "Cloudflare Turnstile Site Key (Contact Us)" \
+    CLOUDFLARE_TURNSTILE_SITE_KEY \
+    ""
+
+prompt \
+    "Google Maps API Key (Store Finder, Region Map)" \
+    GOOGLE_MAPS_API_KEY \
+    ""
+
+prompt \
+    "Google Place ID (Google Reviews)" \
+    GOOGLE_PLACE_ID \
+    ""
 
 REACTEDGE_ROOT="$(dirname "$TARGET_ROOT")/reactedge"
 
@@ -88,18 +111,13 @@ touch "$REACTEDGE_ROOT/.reactedge-write-test" || {
 
 rm -f "$REACTEDGE_ROOT/.reactedge-write-test"
 
-prompt \
-    "Allowed hosts" \
-    ALLOWED_HOSTS \
-    "localhost,127.0.0.1,mageos-docker.magsite.co.uk"
+echo
+echo "Demo Data"
+echo "---------"
+echo "Used by example widgets during local development."
 
 prompt \
-    "Category" \
-    CATEGORY \
-    "tops-men"
-
-prompt \
-    "SKU" \
+    "Demo product SKU" \
     SKU \
     "WJ12"
 
@@ -122,10 +140,7 @@ fi
 
 echo
 
-prompt \
-    "Allow self-signed SSL certificates (development only)" \
-    ALLOW_SELF_SIGNED_SSL \
-    "true"
+ALLOW_SELF_SIGNED_SSL=true
 
 for dir in "$ROOT"/widgets/*; do
     if [[ -d "$dir" && -d "$dir/public" ]]; then
@@ -142,12 +157,11 @@ for dir in "$ROOT"/widgets/*; do
       "placeId": "$GOOGLE_PLACE_ID"
     },
     "magentoGraphql": {
-      "api": "$MAGENTO_GRAPHQL_API"
+      "api": "$SITEURL/graphql"
     }
   },
   "context": {
     "storeCode": "$STORE_CODE",
-    "category": "$CATEGORY",
     "sku": "$SKU"
   }
 }
@@ -163,15 +177,12 @@ cat > "$CONFIG" <<EOF
 CLOUDFLARE_TURNSTILE_SITE_KEY=$CLOUDFLARE_TURNSTILE_SITE_KEY
 GOOGLE_MAPS_API_KEY=$GOOGLE_MAPS_API_KEY
 GOOGLE_PLACE_ID=$GOOGLE_PLACE_ID
-MAGENTO_GRAPHQL_API=$MAGENTO_GRAPHQL_API
 STORE_CODE=$STORE_CODE
-TARGET_SITEURL=$TARGET_SITEURL
+SITEURL=$SITEURL
 TARGET_ROOT=$TARGET_ROOT
-ALLOWED_HOSTS=$ALLOWED_HOSTS
 SSR_ENABLED=$SSR_ENABLED
 SSR_PORT=$SSR_PORT
 SSR_BASE_URL=$SSR_BASE_URL
-CATEGORY=$CATEGORY
 SKU=$SKU
 EOF
 
@@ -185,8 +196,7 @@ EOF
 
 cat > "$ROOT/deployment-orchestrator/.env.dev" <<EOF
 STORE_CODE=$STORE_CODE
-TARGET_SITEURL=$TARGET_SITEURL
+SITEURL=$SITEURL
 TARGET_ROOT=$TARGET_ROOT
-ALLOWED_HOSTS=$ALLOWED_HOSTS
 EOF
 
