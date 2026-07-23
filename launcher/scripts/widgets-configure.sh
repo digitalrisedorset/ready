@@ -121,6 +121,12 @@ prompt \
     SKU \
     "WJ12"
 
+echo
+echo "Server-Side Rendering"
+echo "----------------------"
+echo "Enable SSR to pre-render widgets on the server before they reach the browser."
+echo "This improves initial page rendering and SEO."
+
 prompt \
     "Enable widget SSR (0 or 1)" \
     SSR_ENABLED \

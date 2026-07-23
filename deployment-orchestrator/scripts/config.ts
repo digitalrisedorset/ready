@@ -16,9 +16,10 @@ export function loadConfig(
     CONFIG = {
         storeCode: process.env.STORE_CODE!,
         targetSiteUrl: process.env.TARGET_SITEURL!,
-        allowedHosts: process.env.ALLOWED_HOSTS!
+        allowedHosts: (process.env.ALLOWED_HOSTS ?? '')
             .split(',')
-            .map(host => host.trim()),
+            .map(host => host.trim())
+            .filter(Boolean),
         updateIntegrity: process.env.UPDATE_INTEGRITY
             ? process.env.UPDATE_INTEGRITY === 'true'
             : false
