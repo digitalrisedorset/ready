@@ -28,7 +28,11 @@ export function updateRegistry({ widgetName, buildTarget, registryPath, widgetAs
 
     const newSrc = filename;
 
-    entry.src = newSrc;
+    if (CONFIG.ssrEnabled) {
+        entry.src = 'index.ts';
+    } else {
+        entry.src = newSrc;
+    }
 
     if (baseEntry.css) {
         cssBundle = `widget-${buildTarget}.css`;

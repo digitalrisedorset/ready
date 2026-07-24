@@ -5,7 +5,7 @@ import {LocalInstanceStateContext} from "./ActivtiyContext.tsx";
 
 interface InstanceStateProviderProps {
     children: ReactNode;
-    hostElement: HTMLElement;
+    hostElement?: HTMLElement;
 }
 
 const LocalStateProvider = LocalInstanceStateContext.Provider;
@@ -15,7 +15,9 @@ export const ActivityContextProvider: React.FC<InstanceStateProviderProps> = ({
          hostElement
      }) => {
 
-    const activity = new WidgetActivity(WIDGET_ID, hostElement.dataset.instance)
+    const host = hostElement ?? document.documentElement;
+
+    const activity = new WidgetActivity(WIDGET_ID, host.dataset.instance)
 
     return (
         <LocalStateProvider

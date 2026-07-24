@@ -1,9 +1,8 @@
-import type { WidgetConfig } from "../domain/megamenu.types.ts";
 import { MegamenuContent } from "../components/MegamenuContent.tsx";
 import {readWidgetConfig} from "../Config.ts";
 
 type Props = {
-    rawConfig: WidgetConfig;
+    rawConfig: unknown;
 };
 
 export const WidgetView = ({ rawConfig }: Props) => {
