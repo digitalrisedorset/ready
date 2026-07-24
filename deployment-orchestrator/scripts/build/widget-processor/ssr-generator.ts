@@ -17,11 +17,8 @@ export async function generateSsr(
     variant: SsrVariant,
     report: Report
 ): Promise<string | null> {
-
-    const config = getConfig()
-
     const contractPath = getContractPath(widgetName, contractFile)
-debugger
+
     const rendererPath = path.join(
         getReactEdgeRoot(),
         'packages',

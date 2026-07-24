@@ -80,7 +80,8 @@ export interface Config {
     storeCode: string;
     targetSiteUrl: string,
     allowedHosts: string[],
-    updateIntegrity: boolean
+    updateIntegrity: boolean,
+    ssrEnabled: boolean;
 }
 
 export interface ValidationIssue {

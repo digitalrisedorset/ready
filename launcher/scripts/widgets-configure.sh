@@ -122,13 +122,13 @@ prompt \
     "WJ12"
 
 echo
-echo "Server-Side Rendering"
-echo "----------------------"
-echo "Enable SSR to pre-render widgets on the server before they reach the browser."
-echo "This improves initial page rendering and SEO."
+echo "Server-Side Rendering (SSR)"
+echo "---------------------------"
+echo "Generate pre-rendered HTML alongside the npm packages."
+echo "Enable this for hosts that cannot render React on the server (e.g. PHP)."
 
 prompt \
-    "Enable widget SSR (0 or 1)" \
+    "Generate SSR artefacts (0 or 1)" \
     SSR_ENABLED \
     "1"
 
@@ -204,5 +204,6 @@ cat > "$ROOT/deployment-orchestrator/.env.dev" <<EOF
 STORE_CODE=$STORE_CODE
 SITEURL=$SITEURL
 TARGET_ROOT=$TARGET_ROOT
+SSR_ENABLED=$SSR_ENABLED
 EOF
 

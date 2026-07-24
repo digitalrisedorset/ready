@@ -1,6 +1,7 @@
 import { execSync } from 'child_process';
 import path from 'path';
 import {Report} from "../report.ts";
+import {getConfig} from "../../config.ts";
 
 const buildCache = new Set<string>();
 
@@ -9,6 +10,7 @@ export function buildWidget(
     widgetPath: string,
     report: Report
 ): void {
+    const config = getConfig()
 
     if (buildCache.has(widgetName)) {
 
@@ -22,17 +24,22 @@ export function buildWidget(
         return;
     }
 
+    const buildCommand = config.ssrEnabled
+        ? "build:ssr"
+        : "build";
+
+
     report.info(
         'Building widget',
         {
-            widget: widgetName
+            widget: widgetName,
+            buildCommand
         }
     );
 
     try {
-
         execSync(
-            `npm run build --prefix ${path.join(
+            `npm run ${buildCommand} --prefix ${path.join(
                 widgetPath
             )}`,
             {
