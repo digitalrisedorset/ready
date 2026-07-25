@@ -3,7 +3,7 @@ import 'dotenv/config';
 import {getReactEdgeRoot} from "../shared-resources/filesystem/reactedgeRoot";
 
 function resolveEntry(widget: string): string {
-    return `${getReactEdgeRoot()}/widgets/${widget}/src/ssr/entry.tsx`;
+    return `${getReactEdgeRoot()}/widgets/${widget}/src/entrypoints/ssr.tsx`;
 }
 
 const run = async () => {
