@@ -17,7 +17,7 @@ export default defineConfig({
     outDir: `../../workspace/release/source/${widgetName}/`,
     emptyOutDir: false,
     lib: {
-      entry: "src/index.ts",
+      entry: "src/api/index.ts",
       formats: ["es"],
       fileName: () => "index.js",
     },
