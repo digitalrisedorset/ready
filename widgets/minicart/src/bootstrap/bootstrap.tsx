@@ -1,14 +1,14 @@
 import {createRoot} from "react-dom/client";
 import {WidgetRoot} from "./widget-root.tsx";
-import {getMountedHost} from "../lib/hostReader.ts";
+import {type HostProvider} from "@reactedge/framework/host.ts";
 
 export function bootstrap(
     hostElement: HTMLElement,
-    contract: unknown
+    contract: unknown,
+    _runtime: unknown,
+    hostProvider: HostProvider
 ) {
-    const mountedHost = getMountedHost(hostElement);
-
-    createRoot(mountedHost).render(
+    createRoot(hostProvider.getMountedHost(hostElement)).render(
         <WidgetRoot
             hostElement={hostElement}
             contract={contract}
