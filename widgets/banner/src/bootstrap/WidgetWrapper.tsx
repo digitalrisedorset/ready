@@ -5,12 +5,12 @@ import {BannerSlider} from "../components/BannerSlider.tsx";
 import {BannerStatic} from "../components/BannerStatic.tsx";
 
 type Props = {
-    rawConfig: unknown
+    contract: unknown
 }
 
-export const WidgetWrapper = ({rawConfig}: Props) => {
+export const WidgetWrapper = ({contract}: Props) => {
     const activity = useActivityContext()
-    const config = readWidgetConfig(rawConfig, activity);
+    const config = readWidgetConfig(contract, activity);
 
     if (!config) return null;
 

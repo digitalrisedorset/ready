@@ -18,22 +18,22 @@ export const WIDGET_ID = 'contactus';
  * The resolved configuration includes the Cloudflare integration
  * required to render the captcha.
  *
- * @param rawConfig - Widget contract supplied by the host platform.
- * @param runtimeConfig - Runtime services supplied by the orchestrator.
+ * @param contract - Widget contract supplied by the host platform.
+ * @param runtime - Runtime services supplied by the orchestrator.
  * @param activity - Activity logger for bootstrap events.
  * @returns An immutable Contact Us configuration.
  * @throws When either configuration is invalid.
  */
 export function readWidgetConfig(
-    rawConfig: unknown,
-    runtimeConfig: unknown,
+    contract: unknown,
+    runtime: unknown,
     activity: WidgetActivity
 ): WidgetConfig {
-    activity.log('bootstrap', 'Config Sent', rawConfig);
-    const contract = parseConfig(rawConfig);
-    activity.log('bootstrap', 'Config RuntimeConfig Sent', runtimeConfig);
-    const runtime = parseRuntimeConfig(runtimeConfig)
-    const resolved = resolveConfig(contract, runtime);
+    activity.log('bootstrap', 'Config Sent', contract);
+    const parsedContract = parseConfig(contract);
+    activity.log('bootstrap', 'Config RuntimeConfig Sent', runtime);
+    const parsedRuntime = parseRuntimeConfig(runtime)
+    const resolved = resolveConfig(parsedContract, parsedRuntime);
 
     activity.log('bootstrap', 'Config resolved', resolved);
 

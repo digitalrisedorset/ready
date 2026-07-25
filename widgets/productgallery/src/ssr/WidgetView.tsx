@@ -4,18 +4,18 @@ import {SystemStateProvider} from "../state/System/SystemStateProvider.tsx";
 import {ProductGalleryWidget} from "../components/ProductGalleryWidget.tsx";
 
 type Props = {
-    rawConfig: unknown;
-    runtimeConfig: unknown
+    contract: unknown;
+    runtime: unknown
     bootstrapData: BootstrapData
 };
 
-export const WidgetView = ({ rawConfig, runtimeConfig, bootstrapData }: Props) => {
+export const WidgetView = ({ contract, runtime, bootstrapData }: Props) => {
 
-    const config = readWidgetConfig(rawConfig, runtimeConfig);
+    const config = readWidgetConfig(contract, runtime);
 
     if (!config) return null;
 
-    return <SystemStateProvider config={config.integrations} runtimeConfig={config.runtime} >
+    return <SystemStateProvider config={config.integrations} runtime={config.runtime} >
         <ProductGalleryWidget config={config} bootstrap={bootstrapData} />
     </SystemStateProvider>
 };

@@ -2,12 +2,12 @@ import {WIDGET_ID} from "../Config.ts";
 import {ActivityContextProvider} from "../activity/Context/ActivityContextProvider.tsx";
 import {WidgetWrapper} from "./WidgetWrapper.tsx";
 interface WidgetRootProps {
-    rawConfig: unknown;
+    contract: unknown;
     hostElement?: HTMLElement;
 }
 
 export function WidgetRoot({
-       rawConfig,
+       contract,
        hostElement,
    }: WidgetRootProps) {
     return (
@@ -15,7 +15,7 @@ export function WidgetRoot({
             <ActivityContextProvider
                 {...(hostElement ? { hostElement } : {})}
             >
-                <WidgetWrapper rawConfig={rawConfig} />
+                <WidgetWrapper contract={contract} />
             </ActivityContextProvider>
         </div>
     );

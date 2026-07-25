@@ -37,23 +37,23 @@ export const WIDGET_ID = 'storefinder';
  * The resolved configuration includes the Cloudflare integration
  * required to render the captcha.
  *
- * @param rawConfig - Widget contract supplied by the host platform.
- * @param runtimeConfig - Runtime services supplied by the orchestrator.
+ * @param contract - Widget contract supplied by the host platform.
+ * @param runtime - Runtime services supplied by the orchestrator.
  * @param activity - Activity logger for bootstrap events.
  * @returns An immutable Contact Us configuration.
  * @throws When either configuration is invalid.
  */
 export function readWidgetConfig(
-    rawConfig: unknown,
-    runtimeConfig: unknown,
-    activity: WidgetActivity
+    contract: unknown,
+    runtime: unknown,
+    activity?: WidgetActivity
 ): WidgetConfig {
     try {
-        const contract = parseConfig(rawConfig);
-        const runtime = parseRuntimeConfig(runtimeConfig)
-        const resolved = resolveConfig(contract, runtime);
+        const parsedContract = parseConfig(contract);
+        const parsedRuntime = parseRuntimeConfig(runtime)
+        const resolved = resolveConfig(parsedContract, parsedRuntime);
 
-        activity.log('bootstrap', 'Config resolved', {
+        activity?.log('bootstrap', 'Config resolved', {
             data: resolved.data,
             integrations: resolved.integrations,
             translations: resolved.translations
