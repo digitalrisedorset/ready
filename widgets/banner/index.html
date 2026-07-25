@@ -3,7 +3,7 @@
 <body>
 
 <script type="module">
-    import { mount } from './src/api/widget.ts';
+    import { mount } from './api/widget.ts';
     import {loadContract} from "./src/lib/contract-resolver.js";
     const config = await loadContract('single.json')
     const element = document.querySelector('banner-widget');
