@@ -14,8 +14,6 @@ export function loadRegistry(): WidgetRegistry {
         fs.readFileSync(registryPath, 'utf-8')
     );
 
-    console.log(registryPath)
-
     return RegistrySchema.parse(rawRegistry);
 }
 
