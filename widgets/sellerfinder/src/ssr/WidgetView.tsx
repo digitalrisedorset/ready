@@ -1,13 +1,14 @@
-import { readWidgetConfig, type RuntimeConfig } from "../Config.ts";
-import { SellerFinderWidget } from "../components/SellerFinderWidget.tsx";
+import { readWidgetConfig } from "../Config.ts";
+import type {RuntimeConfig} from "../lib/load-runtime.ts";
+import {SellerFinder} from "../components/SsellerListing.tsx";
 
 type Props = {
-    rawConfig: unknown;
-    runtimeConfig: RuntimeConfig;
+    contract: unknown;
+    runtime: RuntimeConfig;
 };
 
-export const WidgetView = ({ rawConfig, runtimeConfig: _runtimeConfig }: Props) => {
-    const config = readWidgetConfig(rawConfig);
+export const WidgetView = ({ contract, runtime }: Props) => {
+    const config = readWidgetConfig(contract, runtime);
 
-    return <SellerFinderWidget config={config} />;
+    return <SellerFinder config={config} />;
 };

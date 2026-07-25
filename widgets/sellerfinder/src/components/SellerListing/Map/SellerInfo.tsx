@@ -1,8 +1,8 @@
 import { InfoWindow } from "@react-google-maps/api";
-import type {Seller} from "../../../domain/seller.types.ts";
+import type {SellerWithDistance} from "../../../domain/seller.types.ts";
 
 interface SellerInfoProps {
-    readonly seller: Seller;
+    readonly seller: SellerWithDistance;
     readonly unitLabel: string;
     readonly onClose: () => void;
 }

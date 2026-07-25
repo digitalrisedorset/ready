@@ -8,7 +8,7 @@ import type {ResolvedConfigIntegrations, RuntimeConfig} from "../../components/T
 interface SystemStateProviderProps {
     children: ReactNode;
     config: ResolvedConfigIntegrations;
-    runtimeConfig: RuntimeConfig;
+    runtime: RuntimeConfig;
     activity?: WidgetActivity
 }
 
@@ -17,7 +17,7 @@ const LocalStateProvider = LocalSystemStateContext.Provider;
 export const SystemStateProvider: React.FC<SystemStateProviderProps> = ({
     children,
     config,
-    runtimeConfig,
+    runtime,
     activity
 }) => {
     if (!config?.magentoGraphql?.api) {
@@ -25,8 +25,8 @@ export const SystemStateProvider: React.FC<SystemStateProviderProps> = ({
     }
 
     const graphqlClient = useMemo(
-        () => createGraphqlService(config.magentoGraphql.api, runtimeConfig.storeCode, activity),
-        [config.magentoGraphql?.api, runtimeConfig.storeCode]
+        () => createGraphqlService(config.magentoGraphql.api, runtime.storeCode, activity),
+        [config.magentoGraphql?.api, runtime.storeCode]
     );
 
     return (

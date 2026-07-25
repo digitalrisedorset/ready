@@ -7,10 +7,10 @@ export interface BootstrapData {
     galleryData: GalleryTile[]
 }
 
-export const renderHtml = (config: unknown, runtimeConfig: ReactEdgeRuntimeConfig, bootstrap: BootstrapData): string => {
+export const renderHtml = (config: unknown, runtime: ReactEdgeRuntimeConfig, bootstrap: BootstrapData): string => {
     return renderToString(
         <div className={`reactedge-${WIDGET_ID}`}>
-            <WidgetView rawConfig={config} runtimeConfig={runtimeConfig} bootstrapData={bootstrap} />
+            <WidgetView contract={config} runtime={runtime} bootstrapData={bootstrap} />
         </div>
     );
 };

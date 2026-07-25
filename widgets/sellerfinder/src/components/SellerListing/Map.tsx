@@ -1,6 +1,6 @@
-import { GoogleMap, LoadScript, Marker, InfoWindow } from "@react-google-maps/api";
+import { GoogleMap, LoadScript, Marker } from "@react-google-maps/api";
 import { useState } from "react";
-import type {LatLng, ResolvedSellerFinderConfig, Seller} from "../../domain/seller.types.ts";
+import type {LatLng, ResolvedSellerFinderConfig, Seller, SellerWithDistance} from "../../domain/seller.types.ts";
 import {useTranslationState} from "../../state/Translation/useTranslationState.ts";
 import {SellerInfo} from "./Map/SellerInfo.tsx";
 import {getUnitLabel} from "../../domain/sellerSearch.service.ts";
@@ -12,7 +12,7 @@ interface SellerMapProps {
 }
 
 export function SellerMap({ sellers, currentCenter, config }: SellerMapProps) {
-    const [selected, setSelected] = useState<Seller | null>(null);
+    const [selected, setSelected] = useState<SellerWithDistance | null>(null);
     const apiKey = config.integrations.googleMaps?.apiKey
     const {t} = useTranslationState()
 
@@ -37,7 +37,7 @@ export function SellerMap({ sellers, currentCenter, config }: SellerMapProps) {
                         <Marker
                             key={`${seller.lat},${seller.lng}`}
                             position={{ lat: seller.lat, lng: seller.lng }}
-                            onClick={() => setSelected(seller)}
+                            onClick={() => setSelected(seller as SellerWithDistance)}
                         />
                     ))}
 

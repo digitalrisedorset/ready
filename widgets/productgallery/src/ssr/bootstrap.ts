@@ -13,18 +13,18 @@ export async function loadRuntime(): Promise<ReactEdgeRuntimeConfig> {
     );
 }
 
-export async function buildBootstrap(runtimeConfig: ReactEdgeRuntimeConfig) {
-    const graphqlApi = getGraphqQlAPI(runtimeConfig);
+export async function buildBootstrap(runtime: ReactEdgeRuntimeConfig) {
+    const graphqlApi = getGraphqQlAPI(runtime);
 
     const graphqlClient = createGraphqlService(
         graphqlApi as string,
-        runtimeConfig.context.storeCode
+        runtime.context.storeCode
     );
 
     const galleryData =
         await fetchMagentoGalleryData(
             graphqlClient,
-            runtimeConfig.context.sku
+            runtime.context.sku
         );
 
     return {
@@ -32,9 +32,9 @@ export async function buildBootstrap(runtimeConfig: ReactEdgeRuntimeConfig) {
     };
 }
 
-function getGraphqQlAPI(runtimeConfig: ReactEdgeRuntimeConfig) {
+function getGraphqQlAPI(runtime: ReactEdgeRuntimeConfig) {
     const magentoGraphql =
-        runtimeConfig.integrations.magentoGraphql;
+        runtime.integrations.magentoGraphql;
 
     const graphqlApi = magentoGraphql.api
 
