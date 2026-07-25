@@ -1,6 +1,6 @@
-import {getMountedHost} from "../lib/hostReader.ts";
 import {createRoot} from "react-dom/client";
 import {WidgetRoot} from "./widget-root.tsx";
+import {getMountedHost} from "../widget-runtime/lib/hostReader.ts";
 
 export function bootstrap(
     hostElement: HTMLElement,

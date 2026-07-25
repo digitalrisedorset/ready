@@ -6,12 +6,12 @@ import {MegamenuContent} from "../components/MegamenuContent.tsx";
 import {MobileMegamenu} from "../components/MobileMegamenu.tsx";
 
 type Props = {
-    rawConfig?: unknown
+    contract?: unknown
 }
 
-export function WidgetWrapper({rawConfig}: Props) {
+export function WidgetWrapper({contract}: Props) {
     const activity = useActivityContext()
-    const config = readWidgetConfig(rawConfig, activity);
+    const config = readWidgetConfig(contract, activity);
     const isMobile = useMediaQuery('(max-width: 768px)');
 
     if (!config) return null;

@@ -1,8 +1,10 @@
 import {Widget} from "../Widget.tsx";
 import {loadContract} from "../lib/contract-resolver.ts";
+import {loadRuntime} from "../lib/load-runtime.ts";
 
 async function main() {
-    const config = await loadContract("default.json");
+    const runtime = await loadRuntime();
+    const contract = await loadContract<unknown>("default.json");
     const container = document.getElementById("root")!;
 
     const mode = __REACTEDGE_MODE__;
@@ -17,13 +19,15 @@ async function main() {
     if (mode === "hydrate") {
         Widget({
             container,
-            contract: config,
+            contract,
+            runtime,
             hydrate: true
         });
     } else {
         Widget({
             container,
-            contract: config,
+            contract,
+            runtime,
             hydrate: false
         });
     }

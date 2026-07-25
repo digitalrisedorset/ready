@@ -4,7 +4,8 @@ import {WidgetRoot} from "./widget-root.tsx";
 
 export function bootstrap(
     hostElement: HTMLElement,
-    contract: unknown
+    contract: unknown,
+    runtime: unknown
 ) {
     const mountedHost = getMountedHost(hostElement);
 
@@ -12,6 +13,7 @@ export function bootstrap(
         <WidgetRoot
             hostElement={hostElement}
             contract={contract}
+            runtime={runtime}
         />
     );
 }
