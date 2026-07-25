@@ -20,14 +20,6 @@ export interface RuntimeConfig {
     }
 }
 
-export interface RawWidgetConfig {
-    readonly data: {
-        slides: UspSlideData[]
-    }
-
-    readonly settings: UspSettings;
-}
-
 export const WIDGET_ID = 'usp';
 
 /**
@@ -40,17 +32,17 @@ export const WIDGET_ID = 'usp';
  * runtime and the widget implementation for widgets that do not require
  * runtime integrations.
  *
- * @param rawConfig - Widget contract supplied by the host platform.
+ * @param contract - Widget contract supplied by the host platform.
  * @param activity - Optional activity logger used during bootstrap.
  * @returns An immutable widget configuration.
  * @throws When the widget contract is invalid.
  */
 export function readWidgetConfig(
-    rawConfig: unknown,
+    contract: unknown,
     activity?: WidgetActivity
 ): WidgetConfig {
     try {
-        const contract = parseConfig(rawConfig);
+        const parsedContract = parseConfig(contract);
 
         activity?.log(
             'bootstrap',
@@ -58,7 +50,7 @@ export function readWidgetConfig(
             contract
         );
 
-        return Object.freeze(contract);
+        return Object.freeze(parsedContract);
 
     } catch (e) {
         activity?.log(

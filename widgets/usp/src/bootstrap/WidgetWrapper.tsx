@@ -4,12 +4,12 @@ import {Spinner} from "../components/Spinner.tsx";
 import {UspWidget} from "../components/UspWidget.tsx";
 
 type Props = {
-    rawConfig: unknown;
+    contract: unknown;
 };
 
-export const WidgetWrapper = ({ rawConfig }: Props) => {
+export const WidgetWrapper = ({ contract }: Props) => {
     const activity = useActivityContext()
-    const config = readWidgetConfig(rawConfig, activity);
+    const config = readWidgetConfig(contract, activity);
 
     if (!config) return null;
 
