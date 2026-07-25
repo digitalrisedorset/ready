@@ -8,10 +8,10 @@ import {bootstrap} from "./bootstrap/bootstrap.tsx";
 
 const mount = (
     el: HTMLElement,
-    rawConfig: unknown,
+    contract: unknown,
     _runtime: ReactEdgeRuntimeConfig
 ) => {
-    bootstrap(el, rawConfig);
+    bootstrap(el, contract);
 };
 
 const api: WidgetApi = {

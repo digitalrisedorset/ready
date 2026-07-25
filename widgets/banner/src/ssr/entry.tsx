@@ -5,7 +5,7 @@ import {WidgetView} from "./WidgetView.tsx";
 export const renderHtml = (config: unknown): string => {
     return renderToString(
         <div className={`reactedge-${WIDGET_ID}`}>
-            <WidgetView rawConfig={config}/>
+            <WidgetView contract={config}/>
         </div>
     );
 };

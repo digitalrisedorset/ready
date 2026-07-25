@@ -3,17 +3,17 @@ import {createRoot, hydrateRoot} from "react-dom/client";
 
 export interface WidgetOptions {
     container: HTMLElement;
-    rawConfig: unknown;
+    contract: unknown;
     hydrate?: boolean;
 }
 
 export function Widget({
        container,
-       rawConfig,
+       contract,
        hydrate = false,
    }: WidgetOptions) {
     const element = (
-        <WidgetRoot rawConfig={rawConfig} />
+        <WidgetRoot contract={contract} />
     );
 
     if (hydrate) {

@@ -20,18 +20,18 @@ export const WIDGET_ID = 'banner';
  * runtime and the widget implementation for widgets that do not require
  * runtime integrations.
  *
- * @param rawConfig - Widget contract supplied by the host platform.
+ * @param contract - Widget contract supplied by the host platform.
  * @param activity - Optional activity logger used during bootstrap.
  * @returns An immutable widget configuration.
  * @throws When the widget contract is invalid.
  */
 export function readWidgetConfig(
-    rawConfig: unknown,
+    contract: unknown,
     activity?: WidgetActivity
 ): WidgetConfig {
     try {
-        const contract = parseConfig(rawConfig);
-        const resolved = resolvedWidgetConfig(contract)
+        const parsedContract = parseConfig(contract);
+        const resolved = resolvedWidgetConfig(parsedContract)
 
         activity?.log(
             'bootstrap',

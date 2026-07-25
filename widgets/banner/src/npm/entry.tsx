@@ -17,13 +17,13 @@ async function main() {
     if (mode === "hydrate") {
         Widget({
             container,
-            rawConfig: config,
+            contract: config,
             hydrate: true
         });
     } else {
         Widget({
             container,
-            rawConfig: config,
+            contract: config,
             hydrate: false
         });
     }

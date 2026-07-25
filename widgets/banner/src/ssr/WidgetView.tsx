@@ -3,11 +3,11 @@ import {BannerStatic} from "../components/BannerStatic.tsx";
 import {Spinner} from "../components/Spinner.tsx";
 
 type Props = {
-    rawConfig: unknown;
+    contract: unknown;
 };
 
-export const WidgetView = ({ rawConfig }: Props) => {
-    const config = readWidgetConfig(rawConfig);
+export const WidgetView = ({ contract }: Props) => {
+    const config = readWidgetConfig(contract);
 
     if (!config) return null;
 
