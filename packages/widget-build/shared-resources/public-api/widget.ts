@@ -12,5 +12,5 @@ export interface WidgetApi {
         element: HTMLElement,
         config: unknown,
         runtimeConfig: unknown
-    ): Promise<void>;
+    ): void;
 }

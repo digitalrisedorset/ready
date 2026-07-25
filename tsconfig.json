@@ -1,0 +1,10 @@
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@reactedge/public-api/*": [
+        "packages/widget-build/shared-resources/public-api/*"
+      ]
+    }
+  }
+}

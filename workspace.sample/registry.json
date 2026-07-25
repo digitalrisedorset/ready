@@ -44,6 +44,13 @@
       "strategy": "dynamic"
     }
   },
+  "regionmap": {
+    "active": true,
+    "cdn": "default.json",
+    "ssr": {
+      "strategy": "disabled"
+    }
+  },
   "megamenu": {
     "active": true,
     "cdn": "default.json",
