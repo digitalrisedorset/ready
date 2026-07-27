@@ -4,12 +4,15 @@
 
 <script type="module">
     import { mount } from './api/widget.ts';
-    import { loadContract } from "@reactedge/framework/contract";
-    const config = await loadContract('default.json')
+    import { ResourceLoader } from "@reactedge/framework/contract";
+
+    const loader = new ResourceLoader();
+    const contract = await loader.loadContract("default.json");
+
     const element = document.querySelector('usp-widget');
 
     await requestAnimationFrame(() => {
-        mount(element, config);
+        mount(element, contract);
     })
 </script>
 
