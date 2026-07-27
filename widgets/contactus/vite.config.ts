@@ -2,9 +2,18 @@ import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react-swc'
 import pkg from './package.json'
 import { manifestPlugin } from './manifestPlugin'
+import {resolve} from "node:path";
 
 const widgetName = 'contactus';
 export default defineConfig({
+  resolve: {
+    alias: {
+      "@reactedge": resolve(
+          __dirname,
+          "../../packages/widget-build/shared-resources"
+      ),
+    },
+  },
   plugins: [
     react(),
     manifestPlugin({ widgetName }),

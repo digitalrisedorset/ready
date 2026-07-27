@@ -3,11 +3,20 @@ import react from '@vitejs/plugin-react-swc'
 import pkg from './package.json'
 import { manifestPlugin } from './manifestPlugin'
 import { visualizer } from 'rollup-plugin-visualizer';
+import {resolve} from "node:path";
 
 const isAnalyze = process.env.ANALYZE === 'true';
 
 const widgetName = 'regionmap';
 export default defineConfig({
+  resolve: {
+    alias: {
+      "@reactedge": resolve(
+          __dirname,
+          "../../packages/widget-build/shared-resources"
+      ),
+    },
+  },
   plugins: [
     react(),
     isAnalyze && visualizer({
