@@ -4,12 +4,15 @@
 
 <script type="module">
     import { mount } from './api/widget.ts';
-    import { loadContract } from "@reactedge/framework/contract";
-    const config = await loadContract('single.json')
+    import { ResourceLoader } from "@reactedge/framework/contract";
+
+    const loader = new ResourceLoader();
+    const contract = await loader.loadContract("single.json");
+
     const element = document.querySelector('banner-widget');
 
     await requestAnimationFrame(() => {
-        mount(element, config);
+        mount(element, contract);
     })
 </script>
 

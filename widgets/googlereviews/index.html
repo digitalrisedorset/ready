@@ -6,15 +6,16 @@
 
 <script type="module">
   import { mount } from './api/runtime-widget.ts';
-  import { loadContract } from "@reactedge/framework/contract";
-  import {loadRuntime} from "./src/lib/load-runtime.js";
+  import { ResourceLoader } from "@reactedge/framework/contract";
 
-  const config = await loadContract('default.json')
+  const loader = new ResourceLoader();
+  const contract = await loader.loadContract("default.json");
+  const runtime = await loader.loadRuntime();
+
   const element = document.querySelector('googlereviews-widget');
-  const runtime = await loadRuntime();
 
   await requestAnimationFrame(() => {
-    mount(element, config, runtime);
+    mount(element, contract, runtime);
   })
 </script>
 
