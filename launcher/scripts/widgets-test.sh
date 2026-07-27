@@ -8,7 +8,7 @@ if [[ "${1:-}" == "debug" ]]; then
     export PWDEBUG=1
 fi
 
-export TARGET_SITEURL
+export SITEURL
 
 echo "🚀 Building test orchestrator"
 

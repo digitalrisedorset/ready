@@ -4,7 +4,7 @@ import type { WidgetApi } from "@reactedge/public-api/widget";
 import type {ReactEdgeRuntimeConfig} from "@reactedge/public-api/runtime.ts";
 
 import {bootstrap} from "../src/bootstrap/bootstrap.tsx";
-import {ElementHostProvider} from "../../../packages/widget-build/shared-resources/framework/host.ts";
+import {ElementHostProvider} from "@reactedge/framework/host.ts";
 
 const mount = (
     el: HTMLElement,

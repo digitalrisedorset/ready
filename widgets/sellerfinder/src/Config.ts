@@ -1,7 +1,7 @@
 import {parseConfig} from "./ConfigSchema.ts";
 import type {WidgetActivity} from "./activity";
 import {parseRuntimeConfig} from "./ConfigSchemaRuntime.ts";
-import type {ReactEdgeRuntimeConfig} from "../../../packages/widget-build/shared-resources/public-api/runtime.ts";
+import type {ReactEdgeRuntimeConfig} from "@reactedge/public-api/runtime.ts";
 import type {ReactEdgeRuntimeIntegrations, SellerFinderDataConfig, TranslationsConfig} from "./domain/seller.types.ts";
 
 export interface WidgetConfig {

@@ -1,9 +1,9 @@
 import { defineConfig } from '@playwright/test';
 
-const baseURL = process.env.TARGET_SITEURL;
+const baseURL = process.env.SITEURL;
 
 if (!baseURL) {
-    throw new Error('TARGET_SITEURL is not defined');
+    throw new Error('SITEURL is not defined');
 }
 
 export default defineConfig({

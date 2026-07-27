@@ -15,7 +15,7 @@ export function loadConfig(
 
     CONFIG = {
         storeCode: process.env.STORE_CODE!,
-        targetSiteUrl: process.env.TARGET_SITEURL!,
+        targetSiteUrl: process.env.SITEURL!,
         allowedHosts: (process.env.ALLOWED_HOSTS ?? '')
             .split(',')
             .map(host => host.trim())
