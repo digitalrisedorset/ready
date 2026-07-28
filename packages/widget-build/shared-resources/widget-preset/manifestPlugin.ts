@@ -1,14 +1,13 @@
 import { createHash } from 'crypto'
 import fs from 'fs'
 import path from 'path'
-import type { Plugin } from 'vite'
 
 type Options = {
     widgetName: string,
     version: string
 }
 
-export function manifestPlugin({ widgetName, version }: Options): Plugin {
+export function manifestPlugin<TPlugin>({ widgetName, version }: Options): TPlugin {
     if (!widgetName) {
         throw new Error('manifestPlugin requires widgetName')
     }
@@ -67,5 +66,5 @@ export function manifestPlugin({ widgetName, version }: Options): Plugin {
 
             console.log(`✔ Manifest generated: ${manifestPath}`)
         }
-    }
+    } as TPlugin
 }

@@ -4,7 +4,7 @@ import {ProductTiledGallery} from "./ProductTiledGallery.tsx";
 import {ProductGallery} from "./ProductGallery.tsx";
 import {SpinnerOverlay} from "./global/SpinnerOverlay.tsx";
 import {useGalleryData} from "../hooks/domain/useGalleryData.tsx";
-import type {BootstrapData} from "../ssr/entry.tsx";
+import type {BootstrapData} from "../entrypoints/ssr.tsx";
 
 type Props = {
     config: WidgetConfig

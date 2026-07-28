@@ -1,5 +1,5 @@
 import { useMagentoGalleryData } from "../infra/useMagentoGalleryData.tsx";
-import type { BootstrapData } from "../../ssr/entry.tsx";
+import type {BootstrapData} from "../../entrypoints/ssr.tsx";
 
 export function useGalleryData(
     sku: string,

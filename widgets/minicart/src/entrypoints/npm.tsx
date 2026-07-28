@@ -1,10 +1,10 @@
 import {Widget} from "../Widget.tsx";
-import {loadContract} from "../lib/contract-resolver.ts";
-import {loadRuntime} from "../lib/load-runtime.ts";
+import {ResourceLoader} from "@reactedge/framework/contract.ts";
 
 async function main() {
-    const runtime = await loadRuntime();
-    const contract = await loadContract<unknown>("default.json");
+    const loader = new ResourceLoader();
+    const contract = await loader.loadContract("default.json");
+
     const container = document.getElementById("root")!;
 
     const mode = __REACTEDGE_MODE__;
@@ -20,14 +20,12 @@ async function main() {
         Widget({
             container,
             contract,
-            runtime,
             hydrate: true
         });
     } else {
         Widget({
             container,
             contract,
-            runtime,
             hydrate: false
         });
     }

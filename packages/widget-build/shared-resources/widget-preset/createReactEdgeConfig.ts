@@ -1,27 +1,18 @@
-import { defineConfig, UserConfig } from "vite";
-import type { BuildOptions } from "vite";
-
-export interface ReactEdgeConfigOptions {
-    widgetName: string;
-    version: string;
-    isAnalyze: false,
-    build: UserConfig["build"];
-}
-
-export function createWidgetBuildDefaults(
+export function createWidgetBuildDefaults<TBuild>(
     options: {
         widgetName: string;
         version: string;
+        entry: string;
     }
-): BuildOptions {
-    const {widgetName, version } = options;
+): TBuild {
+    const {widgetName, version, entry } = options;
 
     return {
         outDir: `../../workspace/release/source/${widgetName}/`,
         cssCodeSplit: false,
         emptyOutDir: false,
         lib: {
-            entry: "api/widget.ts",
+            entry,
             name: `ReactEdge_${widgetName}`,
             fileName: () => `widget-${widgetName}@${version}.iife.js`,
             formats: ["iife"],
@@ -34,14 +25,14 @@ export function createWidgetBuildDefaults(
         },
         minify: true,
         sourcemap: false
-    }
+    } as TBuild
 }
 
-export function createNpmBuildDefaults({
+export function createNpmBuildDefaults<TBuild>({
    widgetName,
 }: {
     widgetName: string;
-}): BuildOptions {
+}): TBuild {
     return {
         outDir: `../../workspace/release/source/${widgetName}/`,
         emptyOutDir: false,
@@ -59,5 +50,5 @@ export function createNpmBuildDefaults({
                 "react/jsx-runtime",
             ],
         },
-    };
+    } as TBuild
 }

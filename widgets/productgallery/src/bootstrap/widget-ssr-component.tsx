@@ -1,5 +1,5 @@
 import {WIDGET_ID} from "../Config.ts";
-import {WidgetView} from "../ssr/WidgetView.tsx";
+import {WidgetView} from "../WidgetView.tsx";
 
 interface WidgetRootProps {
     contract: unknown;

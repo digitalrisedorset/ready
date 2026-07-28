@@ -1,4 +1,5 @@
-import { defineConfig } from "vite";
+import { defineConfig} from "vite";
+import type { BuildOptions } from "vite"
 import react from "@vitejs/plugin-react-swc";
 import pkg from './package.json';
 import { resolve } from "node:path";
@@ -14,7 +15,7 @@ export default defineConfig({
         process.env.REACTEDGE_MODE ?? "render"
     ),
   },
-  build: createNpmBuildDefaults({
+  build: createNpmBuildDefaults<BuildOptions>({
     widgetName
   }),
 });

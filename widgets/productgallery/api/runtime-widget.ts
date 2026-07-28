@@ -11,7 +11,7 @@ const mount = (
     contract: unknown,
     runtime: ReactEdgeRuntimeConfig
 ) => {
-    bootstrap(el, contract, runtime, new ElementHostProvider());
+    bootstrap(el, contract, runtime, new ElementHostProvider(WIDGET_ID));
 };
 
 const api: WidgetApi = {
