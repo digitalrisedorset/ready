@@ -1,21 +1,31 @@
+import type {OnScrollMode, ResolvedWidget, WidgetLoadMode, WidgetModule} from "./types.ts";
+import type { RuntimeWidgetRegistry } from "@reactedge/framework/contracts/runtime/RuntimeWidgetRegistry.ts";
 import {buildRuntimeConfig, stripMeta} from "./util.ts";
 
-let registryCache: any = null;
+let registryCache: RuntimeWidgetRegistry | null = null;
 
-function getRegistry() {
-    if (registryCache) return registryCache;
+function getRegistry(): RuntimeWidgetRegistry {
+    if (registryCache) {
+        return registryCache;
+    }
 
-    const el = document.getElementById('reactedge-registry');
-    if (!el) throw new Error('Missing registry');
+    const el = document.getElementById("reactedge-registry");
+    if (!el) {
+        throw new Error("Missing registry");
+    }
 
-    registryCache = JSON.parse(el.textContent || '{}');
+    registryCache = JSON.parse(el.textContent ?? "{}") as RuntimeWidgetRegistry;
+
     return registryCache;
 }
 
-const loaded = new Map<string, any>();
+const loaded = new Map<string, WidgetModule>();
 
-async function loadScript(name: string) {
+async function loadScript(
+    name: string
+): Promise<WidgetModule> {
     if (loaded.has(name)) return loaded.get(name);
+
     const widgetRegistry = getRegistry();
     const entry = widgetRegistry[name]
 
@@ -36,7 +46,7 @@ async function loadScript(name: string) {
         document.head.appendChild(s);
     });
 
-    const mod = (window as any)[`ReactEdge_${name}`]; // or whatever your global export is
+    const mod = await resolveGlobal(name)
     loaded.set(name, mod);
 
     return mod;
@@ -44,10 +54,10 @@ async function loadScript(name: string) {
 
 function getInstanceKey(el: HTMLElement) {
     const tag = el.tagName.toLowerCase().replace('-widget', '');
-    return el.dataset.instance || tag; // your pragmatic fallback
+    return el.dataset.instance || tag; // fallback on the widget
 }
 
-function getResolvedEntry(el: HTMLElement) {
+function getResolvedEntry(el: HTMLElement): ResolvedWidget {
     const registry = getRegistry();
     const instanceKey = getInstanceKey(el);
 
@@ -65,11 +75,11 @@ function getResolvedEntry(el: HTMLElement) {
     };
 }
 
-async function resolveGlobal(name: string, retries = 10) {
+async function resolveGlobal(name: string, retries = 10): Promise<WidgetModule> {
     const key = `ReactEdge_${name}`;
 
     for (let i = 0; i < retries; i++) {
-        const mod = (window as any)[key];
+        const mod = window[key];
         if (mod) return mod;
         await new Promise(r => setTimeout(r, 10));
     }
@@ -88,17 +98,28 @@ function shouldMountWidgets(): boolean {
     return true;
 }
 
-function getDebugMode(): string | null {
-    const params = new URLSearchParams(window.location.search);
+type DebugMode =
+    | "runtime"
+    | "eager"
+    | null;
 
-    return params.get('reactedge_debug');
+function getDebugMode(): DebugMode {
+    const value = new URLSearchParams(window.location.search)
+        .get("reactedge_debug");
+
+    switch (value) {
+        case "runtime":
+        case "eager":
+            return value;
+        default:
+            return null;
+    }
 }
 
 export async function mountWidget(el: HTMLElement) {
     const { type, entry } = getResolvedEntry(el);
 
-    await loadScript(type);               // load once per TYPE
-    const mod = await resolveGlobal(type);
+    const mod = await loadScript(type);
 
     if (mod?.mount) {
         const runtimeConfig = buildRuntimeConfig()
@@ -110,7 +131,7 @@ export async function mountWidget(el: HTMLElement) {
 
             console.log('Element:', el);
             console.log('Registry entry:', entry);
-            console.log('Contract:', entry?.contract);
+            console.log('Contract:', entry.contract);
             console.log('Runtime:', runtimeConfig);
             console.log(
                 'Runtime node:',
@@ -122,15 +143,15 @@ export async function mountWidget(el: HTMLElement) {
 
         if (!shouldMountWidgets()) {
             console.info('[ReactEdge] CSR mount skipped', {
-                widget: entry?.widget,
-                instance: entry?.id
+                widget: entry.widget,
+                instance: entry.id
             });
 
             return;
         }
 
-        if (entry?.contract !== null) {
-            const contract = entry?.contract ? stripMeta(entry.contract) : null;
+        if (entry.contract !== null) {
+            const contract = entry.contract ? stripMeta(entry.contract) : null;
             mod.mount(el, contract, runtimeConfig);
         } else {
             mod.mount(el, null, runtimeConfig);
@@ -138,8 +159,14 @@ export async function mountWidget(el: HTMLElement) {
     }
 }
 
-function getWidgetType(el: HTMLElement) {
-    return el.tagName.toLowerCase().replace('-widget', '');
+function getWidgetType(el: HTMLElement): string | null {
+    const tag = el.tagName.toLowerCase();
+
+    if (!tag.endsWith("-widget")) {
+        return null;
+    }
+
+    return tag.slice(0, -"-widget".length);
 }
 
 export function scheduleWidgets() {
@@ -149,9 +176,11 @@ export function scheduleWidgets() {
 
     widgets.forEach(el => {
         const name = getWidgetType(el)
-        if (!name) return;
+        if (name === null) {
+            return;
+        }
 
-        const mode = el.dataset.load || 'lazy';
+        const mode = (el.dataset.load as WidgetLoadMode | undefined) ?? "lazy";
 
         if (debugMode === 'eager' && mode !== 'ssr') {
             mountWidget(el);
@@ -186,7 +215,7 @@ export function scheduleWidgets() {
             return;
         }
 
-        if (mode.startsWith('on-scroll')) {
+        if (isOnScrollMode(mode)) {
             scheduleOnScroll(el, mode);
             return;
         }
@@ -219,7 +248,10 @@ function onReady(cb: () => void) {
     }
 }
 
-function scheduleOnScroll(el: HTMLElement, mode: string) {
+function scheduleOnScroll(
+    el: HTMLElement,
+    mode: OnScrollMode
+) {
     const match = mode.match(/^on-scroll:(\d+)$/);
     if (!match) return;
 
@@ -233,6 +265,12 @@ function scheduleOnScroll(el: HTMLElement, mode: string) {
     };
 
     window.addEventListener('scroll', onScroll, { passive: true });
+}
+
+function isOnScrollMode(
+    mode: WidgetLoadMode
+): mode is OnScrollMode {
+    return mode.startsWith("on-scroll:");
 }
 
 export function boot() {

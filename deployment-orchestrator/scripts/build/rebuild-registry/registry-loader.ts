@@ -2,12 +2,12 @@
  * Loads, validates, and exposes the widget registry. Responsible for reading widgets-dev.json.
  */
 
-import type { WidgetRegistry } from '../types.ts';
 import fs from "fs";
 import {RegistrySchema} from "./schema.ts";
 import {getRegistryPath} from "../paths.ts";
+import type {BuildWidgetRegistry} from "@reactedge/framework/contracts/buiild/BuildWidgetRegistry.ts";
 
-export function loadRegistry(): WidgetRegistry {
+export function loadRegistry(): BuildWidgetRegistry {
     const registryPath = getRegistryPath();
 
     const rawRegistry = JSON.parse(
@@ -19,7 +19,7 @@ export function loadRegistry(): WidgetRegistry {
 
 export function resolveWidgets(
     selected: string[],
-    registry: WidgetRegistry
+    registry: BuildWidgetRegistry
 ): string[] {
     const expanded = new Set<string>();
 
@@ -36,7 +36,7 @@ export function resolveWidgets(
     return [...expanded];
 }
 
-export function resolveWidgetEntry(name: string, registry: WidgetRegistry) {
+export function resolveWidgetEntry(name: string, registry: BuildWidgetRegistry) {
     const entry = registry[name];
 
     if (!entry) {
@@ -57,31 +57,4 @@ export function resolveWidgetEntry(name: string, registry: WidgetRegistry) {
     }
 
     return entry;
-}
-
-export function expandWithAliases(
-    selected: string[],
-    registry: WidgetRegistry
-) {
-    const result = new Set<string>();
-
-    for (const name of selected) {
-        const entry = registry[name];
-        if (!entry) {
-            throw new Error(`Widget "${name}" not found`);
-        }
-
-        const base = 'widget' in entry ? entry.widget : name;
-
-        for (const [otherName, otherEntry] of Object.entries(registry)) {
-            const otherBase =
-                'widget' in otherEntry ? otherEntry.widget : otherName;
-
-            if (otherBase === base) {
-                result.add(otherName);
-            }
-        }
-    }
-
-    return result;
 }

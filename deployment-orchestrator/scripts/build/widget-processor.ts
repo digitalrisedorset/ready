@@ -1,7 +1,7 @@
 /**
  * Coordinates all processing required for a single widget. Owns the "process one widget" workflow.
  */
-import type { ProcessedWidget, SsrViewMap, WidgetRegistry } from "./types.ts";
+import type { ProcessedWidget } from "./types.ts";
 import { resolveWidgetEntry } from "./rebuild-registry/registry-loader.ts";
 import { buildWidget } from "./widget-processor/build-widget.ts";
 import { Report } from "./report.ts";
@@ -13,10 +13,12 @@ import { writeManifest } from "./widget-processor/manifest-writer.ts";
 import { getWidgetPath } from "./paths.ts";
 import { getFilename } from "./util.ts";
 import { ContractImageProcessor } from "./contract-loader/optimiser/validate-images.ts";
+import type {BuildWidgetRegistry} from "@reactedge/framework/contracts/buiild/BuildWidgetRegistry.ts";
+import type {SsrViewMap} from "@reactedge/framework/contracts/buiild/WidgetSsrConfig.ts";
 
 export async function processWidget(
     instanceName: string,
-    registry: WidgetRegistry,
+    registry: BuildWidgetRegistry,
     report: Report
 ): Promise<ProcessedWidget> {
     let manifestResult: string | null = null;

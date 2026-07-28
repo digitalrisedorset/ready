@@ -4,7 +4,7 @@ import https from 'https';
 import fetch from 'node-fetch';
 import sharp from 'sharp';
 import { getConfig } from "../../../config.ts"
-import type { WidgetImageOptimisationConfig } from "../../types.ts";
+import {WidgetImageOptimisationConfig} from "@reactedge/framework/contracts/buiild/BuildWidgetRegistry.ts";
 
 const MAX_WIDTH = 700;
 

@@ -1,8 +1,7 @@
 import { execSync } from 'child_process';
 import path from 'path';
-import {getConfig} from "../config.ts";
 import {Report} from "../build/report.ts";
-import {getReactEdgeRoot} from "../../../packages/widget-build/shared-resources/filesystem/reactedgeRoot.ts";
+import {ReactEdgeRoot} from "@reactedge/filesystem/reactedgeRoot.ts";
 
 export function testWidget(
     widgetName: string,
@@ -18,7 +17,7 @@ export function testWidget(
 
     try {
         const playwright = path.join(
-            getReactEdgeRoot(),
+            ReactEdgeRoot.get(),
             'node_modules',
             '.bin',
             'playwright'
@@ -27,7 +26,7 @@ export function testWidget(
         execSync(
             `${playwright} test --config=tests/playwright.stage.config.ts widgets/${widgetName}/tests`,
             {
-                cwd: getReactEdgeRoot(),
+                cwd: ReactEdgeRoot.get(),
                 stdio: 'inherit',
                 env: {
                     ...process.env,

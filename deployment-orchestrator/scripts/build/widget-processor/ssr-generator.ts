@@ -7,9 +7,8 @@ import {Report} from "../report.ts";
 import {getContractPath, getWidgetPath} from "../paths.ts";
 import {exec} from "node:child_process";
 import {resolveContractTags} from "../contract-loader/wrapper.ts";
-import type {SsrVariant} from "../types.ts";
-import {getConfig} from "../../config.ts";
-import {getReactEdgeRoot} from "../../../../packages/widget-build/shared-resources/filesystem/reactedgeRoot.ts";
+import {SsrVariant} from "@reactedge/framework/contracts/WidgetSsrConfig.ts";
+import {getReactEdgeRoot} from "@reactedge/filesystem/reactedgeRoot.ts";
 
 export async function generateSsr(
     widgetName: string,
@@ -20,7 +19,7 @@ export async function generateSsr(
     const contractPath = getContractPath(widgetName, contractFile)
 
     const rendererPath = path.join(
-        getReactEdgeRoot(),
+        ReactEdgeRoot.get(),
         'packages',
         'widget-build',
         'ssr-generation',
@@ -45,7 +44,7 @@ export async function generateSsr(
             exec(
                 `NODE_TLS_REJECT_UNAUTHORIZED=0 npx tsx --tsconfig "widgets/${widgetName}/tsconfig.app.json" ${rendererPath} ${widgetName} "${contractPath}" ${variant}`,
                 {
-                    cwd: getReactEdgeRoot(),
+                    cwd: ReactEdgeRoot.get(),
                     encoding: 'utf8'
                 },
                 (error, stdout) => {

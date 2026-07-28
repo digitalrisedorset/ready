@@ -1,8 +1,8 @@
 {
   "type": "module",
   "scripts": {
-    "build": "node scripts/deploy.ts",
-    "test": "node scripts/test.ts"
+    "build": "tsx --tsconfig ../tsconfig.json scripts/deploy.ts",
+    "test": "tsx --tsconfig ../tsconfig.json scripts/test.ts"
   },
   "devDependencies": {
     "@types/node": "^25.6.0"
