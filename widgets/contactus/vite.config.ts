@@ -1,10 +1,15 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react-swc'
 import pkg from './package.json'
-import { manifestPlugin } from './manifestPlugin'
+import { manifestPlugin } from '../../packages/widget-build/shared-resources/widget-preset/manifestPlugin'
 import {resolve} from "node:path";
+import {createWidgetBuildDefaults} from "../../packages/widget-build/shared-resources/widget-preset/createReactEdgeConfig";
+import {reactEdgeVisualizer} from "../../packages/widget-build/shared-resources/widget-preset/reactEdgeVisualizer";
 
-const widgetName = 'contactus';
+const isAnalyze = process.env.ANALYZE === 'true';
+
+const widgetName = pkg.name.replace(/^widget-/, '');
+
 export default defineConfig({
   resolve: {
     alias: {
@@ -14,30 +19,19 @@ export default defineConfig({
       ),
     },
   },
+
   plugins: [
     react(),
-    manifestPlugin({ widgetName }),
+    reactEdgeVisualizer(isAnalyze),
+    manifestPlugin({ widgetName, version: pkg.version }),
   ],
+
   define: {
-    'process.env': {}
+    "process.env.NODE_ENV": JSON.stringify("production"),
   },
-  build: {
-    outDir: `../../workspace/release/source/${widgetName}/`,
-    cssCodeSplit: true,
-    emptyOutDir: false,
-    lib: {
-      entry: "api/widget-runtime.ts",
-      name: `ReactEdge_${widgetName}`,
-      fileName: () => `widget-${widgetName}@${pkg.version}.iife.js`,
-      formats: ["iife"],
-    },
-    rollupOptions: {
-      output: {
-        inlineDynamicImports: true,
-        assetFileNames: `widget-${widgetName}.[ext]`,
-      },
-    },
-    minify: true,
-    sourcemap: false
-  }
-})
+
+  build: createWidgetBuildDefaults({
+    widgetName,
+    version: pkg.version,
+  }),
+});
