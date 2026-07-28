@@ -3,17 +3,14 @@
  */
 
 import path from 'path';
-import { fileURLToPath } from 'url';
 import {getConfig} from "../config.ts";
-import {getReactEdgeRoot} from "../../../packages/widget-build/shared-resources/filesystem/reactedgeRoot.ts";
-
-const __filename = fileURLToPath(import.meta.url);
+import {ReactEdgeRoot} from "@reactedge/filesystem/reactedgeRoot.ts";
 
 export function getWidgetPath(
     widgetName: string
 ): string {
     return path.join(
-        getReactEdgeRoot(),
+        ReactEdgeRoot.get(),
         'widgets',
         widgetName
     );
@@ -23,7 +20,7 @@ export function getWidgetAssetsPath(
     widgetName: string
 ): string {
     return path.join(
-        getReactEdgeRoot(),
+        ReactEdgeRoot.get(),
         'workspace',
         'release',
         'source',
@@ -36,7 +33,7 @@ export function getWidgetManifestsPath(
 ): string {
     const CONFIG = getConfig()
     return path.join(
-        getReactEdgeRoot(),
+        ReactEdgeRoot.get(),
         'workspace',
         CONFIG.storeCode,
         'manifests',
@@ -50,7 +47,7 @@ export function getContractPath(
 ): string {
     const CONFIG = getConfig()
     return path.join(
-        getReactEdgeRoot(),
+        ReactEdgeRoot.get(),
         'workspace',
         CONFIG.storeCode,
         'contracts',
@@ -61,7 +58,7 @@ export function getContractPath(
 
 export function getRegistryPath(): string {
     return path.join(
-        getReactEdgeRoot(),
+        ReactEdgeRoot.get(),
         'workspace',
         'registry.json'
     );

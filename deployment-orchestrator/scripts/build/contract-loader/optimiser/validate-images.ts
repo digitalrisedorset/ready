@@ -1,8 +1,8 @@
-import type {WidgetImageOptimisationConfig} from "../../types.ts";
 import {Report} from "../../report.ts";
 import {ImageExtractor} from "../data-extractor/images.ts";
 import {ImageOptimiser} from "../data-processor/image-optimiser.ts";
 import {ContractImageTransformer} from "../data-processor/contract-image-transformer.ts";
+import {WidgetImageOptimisationConfig} from "@reactedge/framework/contracts/buiild/BuildWidgetRegistry.ts";
 
 
 export class ContractImageProcessor {

@@ -5,7 +5,6 @@ export {};
 declare global {
     interface Window {
         ReactEdgeRuntime: ReactEdgeRuntime;
-        React: any;
-        ReactDOM: any;
+        [key: `ReactEdge_${string}`]: WidgetModule | undefined;
     }
 }

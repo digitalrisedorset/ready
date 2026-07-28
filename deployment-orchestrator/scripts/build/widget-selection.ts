@@ -1,7 +1,7 @@
 import {checkbox} from "@inquirer/prompts";
-import type {WidgetRegistry} from "./types.ts";
+import type {BuildWidgetRegistry} from "@reactedge/framework/contracts/BuildWidgetRegistry.ts";
 
-export async function selectWidgets(registry: WidgetRegistry): Promise<string[]> {
+export async function selectWidgets(registry: BuildWidgetRegistry): Promise<string[]> {
     const deployableWidgets =
         Object.keys(registry)
             .filter(

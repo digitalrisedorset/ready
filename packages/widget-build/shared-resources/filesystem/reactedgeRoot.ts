@@ -1,11 +1,12 @@
 import { execSync } from "node:child_process";
 
-const ROOT = execSync(
-    "git rev-parse --show-toplevel",
-    { encoding: "utf8" }
-).trim();
+export class ReactEdgeRoot {
+    private static readonly root = execSync(
+        "git rev-parse --show-toplevel",
+        { encoding: "utf8" }
+    ).trim();
 
-export function getReactEdgeRoot(): string {
-    return ROOT;
+    static get(): string {
+        return this.root;
+    }
 }
-
