@@ -1,4 +1,4 @@
-import {ReactEdgeRuntimeConfig} from "@reactedge/public-api/runtime";
+import type {ReactEdgeRuntimeConfig} from "@reactedge/public-api/runtime";
 
 export class ResourceLoader {
     async load<T>(path: string): Promise<T> {

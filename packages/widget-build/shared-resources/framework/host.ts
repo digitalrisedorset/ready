@@ -1,20 +1,25 @@
-import {WIDGET_ID} from "../../../../widgets/banner/src/Config";
-
 export interface HostProvider {
     getMountedHost(hostElement: HTMLElement): HTMLElement | ShadowRoot;
 }
 
 export class ElementHostProvider implements HostProvider {
+    private widgetId: string
+
+    constructor(widgetId: string) {
+        this.widgetId = widgetId;
+    }
     getMountedHost(hostElement: HTMLElement): HTMLElement {
-        hostElement.classList.add(`reactedge-${WIDGET_ID}`);
+        hostElement.classList.add(`reactedge-${this.widgetId}`);
         return hostElement;
     }
 }
 
 export class ShadowHostProvider implements HostProvider {
-    constructor(
-        private readonly styles?: string[]
-    ) {}
+    private readonly styles?: string[] | undefined;
+
+    constructor(styles?: string[]) {
+        this.styles = styles;
+    }
 
     getMountedHost(hostElement: HTMLElement): ShadowRoot {
         const shadow =

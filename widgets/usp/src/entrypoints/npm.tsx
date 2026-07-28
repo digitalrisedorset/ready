@@ -1,8 +1,9 @@
 import {Widget} from "../Widget.tsx";
-import {loadContract} from "../lib/contract-resolver.ts";
+import { ResourceLoader } from "@reactedge/framework/contract";
 
 async function main() {
-    const config = await loadContract("default.json");
+    const loader = new ResourceLoader();
+    const contract = await loader.loadContract("default.json");
     const container = document.getElementById("root")!;
 
     const mode = __REACTEDGE_MODE__;
@@ -17,13 +18,13 @@ async function main() {
     if (mode === "hydrate") {
         Widget({
             container,
-            contract: config,
+            contract,
             hydrate: true
         });
     } else {
         Widget({
             container,
-            contract: config,
+            contract,
             hydrate: false
         });
     }

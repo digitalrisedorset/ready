@@ -10,7 +10,7 @@ const mount = (
     el: HTMLElement,
     contract: unknown
 ) => {
-    bootstrap(el, contract, undefined, new ElementHostProvider());
+    bootstrap(el, contract, undefined, new ElementHostProvider(WIDGET_ID));
 };
 
 const api: WidgetApi = {
