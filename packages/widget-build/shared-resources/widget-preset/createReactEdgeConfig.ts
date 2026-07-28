@@ -8,18 +8,6 @@ export interface ReactEdgeConfigOptions {
     build: UserConfig["build"];
 }
 
-export function createReactEdgeConfig(
-    options: ReactEdgeConfigOptions
-) {
-    const {widgetName, version, build, isAnalyze } = options;
-
-    return defineConfig({
-        define: {
-            'process.env.NODE_ENV': JSON.stringify('production')
-        }
-    })
-}
-
 export function createWidgetBuildDefaults(
     options: {
         widgetName: string;
@@ -47,4 +35,29 @@ export function createWidgetBuildDefaults(
         minify: true,
         sourcemap: false
     }
+}
+
+export function createNpmBuildDefaults({
+   widgetName,
+}: {
+    widgetName: string;
+}): BuildOptions {
+    return {
+        outDir: `../../workspace/release/source/${widgetName}/`,
+        emptyOutDir: false,
+        lib: {
+            entry: "api/index.ts",
+            formats: ["es"],
+            fileName: () => "index.js",
+        },
+        rollupOptions: {
+            external: [
+                "react",
+                "react-dom",
+                "react-dom/client",
+                "react-dom/server",
+                "react/jsx-runtime",
+            ],
+        },
+    };
 }
