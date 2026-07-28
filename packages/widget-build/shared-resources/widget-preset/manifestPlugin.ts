@@ -1,15 +1,14 @@
-// build/manifestPlugin.ts
-
 import { createHash } from 'crypto'
 import fs from 'fs'
 import path from 'path'
 import type { Plugin } from 'vite'
 
 type Options = {
-    widgetName: string
+    widgetName: string,
+    version: string
 }
 
-export function manifestPlugin({ widgetName }: Options): Plugin {
+export function manifestPlugin({ widgetName, version }: Options): Plugin {
     if (!widgetName) {
         throw new Error('manifestPlugin requires widgetName')
     }
@@ -19,8 +18,6 @@ export function manifestPlugin({ widgetName }: Options): Plugin {
         apply: 'build',
 
         generateBundle(options: any, bundle: any) {
-            const version = require('./package.json').version
-
             const entries = Object.entries(bundle).filter(
                 ([fileName, chunk]: any) =>
                     chunk.type === 'chunk' && fileName.endsWith('.iife.js')
@@ -44,6 +41,12 @@ export function manifestPlugin({ widgetName }: Options): Plugin {
             const newFileName = `widget-${widgetName}@${hash}.iife.js`
             const cssFilename = `widget-${widgetName}.css`
 
+            bundle[newFileName] = {
+                ...chunk,
+                fileName: newFileName
+            }
+            delete bundle[fileName]
+
             const manifest = {
                 widget: widgetName,
                 version,
@@ -55,36 +58,12 @@ export function manifestPlugin({ widgetName }: Options): Plugin {
 
             const outDir = options.dir || 'www'
 
-            const oldPath = path.join(
-                outDir,
-                fileName
-            );
-
-            const newPath = path.join(
-                outDir,
-                newFileName
-            );
-
-            if (fs.existsSync(oldPath)) {
-                fs.renameSync(
-                    oldPath,
-                    newPath
-                );
-                console.log(`✔ Bundle copied: ${newPath}`)
-            }
-
             const manifestPath = path.join(
                 outDir,
                 `widget-${widgetName}.manifest.json`
             )
 
             fs.writeFileSync(manifestPath, JSON.stringify(manifest, null, 2))
-
-            this.emitFile({
-                type: 'asset',
-                fileName: `widget-${widgetName}.manifest.json`,
-                source: JSON.stringify(manifest, null, 2)
-            })
 
             console.log(`✔ Manifest generated: ${manifestPath}`)
         }
