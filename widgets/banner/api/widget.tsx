@@ -25,7 +25,7 @@ const api: WidgetApi = {
 };
 
 if (typeof window !== "undefined") {
-    (window as any)[`ReactEdge_${WIDGET_ID}`] = api;
+    window[`ReactEdge_${WIDGET_ID}`] = api;
 }
 
 export { mount };
