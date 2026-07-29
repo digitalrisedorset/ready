@@ -4,7 +4,7 @@ import type {
     WidgetConfig,
     RuntimeConfig
 } from "./domain/megamenu.types.ts";
-import type {WidgetActivity} from "./activity";
+import type {WidgetActivity} from "@reactedge/framework/activity";
 import {parseConfig, type SchemaWidgetConfig} from "./ConfigSchema.ts";
 
 export const WIDGET_ID = 'megamenu';

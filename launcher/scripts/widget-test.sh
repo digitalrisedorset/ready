@@ -12,6 +12,24 @@ fi
 
 ROOT="$(git rev-parse --show-toplevel)"
 
+if [[ "$WIDGET" == "all" ]]; then
+    for dir in "$ROOT/widgets"/*; do
+        [[ -d "$dir" ]] || continue
+        [[ -f "$dir/package.json" ]] || continue
+
+        widget=$(basename "$dir")
+
+        echo
+        echo "========================================="
+        echo "Testing $widget"
+        echo "========================================="
+
+        "$0" "$widget" "${2:-}"
+    done
+
+    exit 0
+fi
+
 cd "$ROOT/widgets/$WIDGET"
 
 npm run dev &

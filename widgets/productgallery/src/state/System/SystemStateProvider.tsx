@@ -1,9 +1,9 @@
 import React from "react";
 import {type ReactNode, useMemo} from "react";
 import {LocalSystemStateContext} from "./SystemState.tsx";
-import {createGraphqlService} from "../../services/graphql/graphql.service.ts";
-import type {WidgetActivity} from "../../activity";
+import type {WidgetActivity} from "@reactedge/framework/activity";
 import type {ResolvedConfigIntegrations, RuntimeConfig} from "../../components/Types.ts";
+import {createGraphqlService} from "@reactedge/framework/graphql/graphql.service.ts";
 
 interface SystemStateProviderProps {
     children: ReactNode;

@@ -1,4 +1,4 @@
-import type {WidgetActivity} from "./activity";
+import type {WidgetActivity} from "@reactedge/framework/activity";
 import type {ReactEdgeRuntimeConfig, WidgetConfig} from "./domain/regionmap.types.ts";
 import {normalizeOptionalFields, parseConfig, type SchemaWidgetConfig} from "./ConfigSchema.ts";
 import {parseRuntimeConfig} from "./ConfigSchemaRuntime.ts";

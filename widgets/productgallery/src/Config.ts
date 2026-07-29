@@ -1,5 +1,5 @@
 import {type WidgetConfig} from "./components/Types.ts";
-import type {WidgetActivity} from "./activity";
+import type {WidgetActivity} from "@reactedge/framework/activity";
 import {parseConfig, type SchemaWidgetConfig} from "./ConfigSchema.ts";
 import {parseRuntimeConfig, type SchemaRuntimeConfig} from "./ConfigSchemaRuntime.ts";
 

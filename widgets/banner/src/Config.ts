@@ -1,6 +1,6 @@
 import {type BannerSettingConfig, type BannerSlide} from "./components/Types.ts";
-import type {WidgetActivity} from "./activity";
 import {normalizeOptionalFields, parseConfig, type SchemaWidgetConfig} from "./ConfigSchema.ts";
+import type {WidgetActivity} from "@reactedge/framework/activity";
 
 export interface WidgetConfig {
     readonly slides: BannerSlide[]

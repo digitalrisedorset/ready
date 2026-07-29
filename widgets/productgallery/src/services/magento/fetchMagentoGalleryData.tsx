@@ -1,5 +1,5 @@
 import type {GalleryTile} from "../../components/Types.ts";
-import type {GraphqlClient} from "../graphql/graphqlClient.ts";
+import type {GraphqlClient} from "@reactedge/framework/graphql/graphqlClient.ts";
 
 export type MagentoProduct = {
     sku: string

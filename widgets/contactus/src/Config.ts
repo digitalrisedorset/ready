@@ -1,5 +1,5 @@
 import type {WidgetConfig} from "./domain/contact.types.ts";
-import type {WidgetActivity} from "./activity";
+import type {WidgetActivity} from "@reactedge/framework/activity";
 import {normalizeOptionalFields, parseConfig, type SchemaWidgetConfig} from "./ConfigSchema.ts";
 import {parseRuntimeConfig, type SchemaRuntimeConfig} from "./ConfigSchemaRuntime.ts";
 

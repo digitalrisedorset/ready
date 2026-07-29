@@ -1,5 +1,5 @@
-import type {WidgetActivity} from "../../activity";
-import {normalizeGraphqlResponse} from "../../lib/graphqlResponseNormalizer.ts";
+import type {WidgetActivity} from "@reactedge/framework/activity";
+import {normalizeGraphqlResponse} from "@reactedge/framework/graphql/graphqlResponseNormalizer";
 
 export type GraphqlClient = <T>(
     query: string,

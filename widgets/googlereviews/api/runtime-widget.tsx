@@ -3,8 +3,9 @@ import { WIDGET_ID } from "../src/Config.ts";
 import type { WidgetApi } from "@reactedge/public-api/widget";
 import type {ReactEdgeRuntimeConfig} from "@reactedge/public-api/runtime.ts";
 
-import {bootstrap} from "../src/bootstrap/bootstrap.tsx";
 import {ShadowHostProvider} from "@reactedge/framework/host.ts";
+import {createRoot} from "react-dom/client";
+import {WidgetRoot} from "../src/bootstrap/widget-root.tsx";
 import {googleReviewsStyles} from "../src/styles/google-reviews.styles.ts";
 
 const mount = (
@@ -12,7 +13,15 @@ const mount = (
     contract: unknown,
     runtime: ReactEdgeRuntimeConfig
 ) => {
-    bootstrap(el, contract, runtime, new ShadowHostProvider(googleReviewsStyles));
+    const hostProvider = new ShadowHostProvider(googleReviewsStyles)
+
+    createRoot(hostProvider.getMountedHost(el)).render(
+        <WidgetRoot
+            hostElement={el}
+            contract={contract}
+            runtime={runtime}
+        />
+    )
 };
 
 const api: WidgetApi = {
@@ -22,5 +31,3 @@ const api: WidgetApi = {
 if (typeof window !== "undefined") {
     (window as any)[`ReactEdge_${WIDGET_ID}`] = api;
 }
-
-export { mount };
