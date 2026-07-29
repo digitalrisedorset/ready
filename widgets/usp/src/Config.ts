@@ -1,6 +1,6 @@
 import {type UspSettings, type UspSlideData} from "./components/Types.ts";
 import {parseConfig} from "./ConfigSchema.ts";
-import type {WidgetActivity} from "./activity";
+import type {WidgetActivity} from "@reactedge/framework/activity";
 
 export interface WidgetConfig {
     /**

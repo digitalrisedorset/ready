@@ -1,5 +1,5 @@
 import {parseConfig} from "./ConfigSchema.ts";
-import type {WidgetActivity} from "./activity";
+import type {WidgetActivity} from "@reactedge/framework/activity";
 import {parseRuntimeConfig} from "./ConfigSchemaRuntime.ts";
 import type {ReactEdgeRuntimeConfig} from "@reactedge/public-api/runtime.ts";
 import type {ReactEdgeRuntimeIntegrations, SellerFinderDataConfig, TranslationsConfig} from "./domain/seller.types.ts";

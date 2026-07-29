@@ -3,7 +3,7 @@ import type {
     ReactEdgeRuntimeConfig,
     WidgetConfig
 } from "./domain/googlereviews.types.ts";
-import type {WidgetActivity} from "./activity";
+import type {WidgetActivity} from "@reactedge/framework/activity";
 import {parseConfig} from "./ConfigSchema.ts";
 import {parseRuntimeConfig} from "./ConfigSchemaRuntime.ts";
 

@@ -1,4 +1,4 @@
-import type {WidgetActivity} from "./activity";
+import type {WidgetActivity} from "@reactedge/framework/activity";
 import {parseConfig} from "./ConfigSchema.ts";
 import type {WidgetConfig} from "./components/Types.ts";
 import {normalizeCurrency} from "./lib/currency.ts";

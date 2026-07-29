@@ -1,15 +1,23 @@
 import "../src/styles/widget.css";
-import {bootstrap} from "../src/bootstrap/bootstrap.tsx";
 import {WIDGET_ID} from "../src/Config.ts";
 import {ElementHostProvider} from "@reactedge/framework/host.ts";
 import type {WidgetApi} from "@reactedge/public-api/widget.ts";
+import {createRoot} from "react-dom/client";
+import {WidgetRoot} from "../src/bootstrap/widget-root.tsx";
 
 
 const mount = (
     el: HTMLElement,
     contract: unknown
 ) => {
-    bootstrap(el, contract, undefined, new ElementHostProvider(WIDGET_ID));
+    const hostProvider = new ElementHostProvider(WIDGET_ID)
+
+    createRoot(hostProvider.getMountedHost(el)).render(
+        <WidgetRoot
+            hostElement={el}
+            contract={contract}
+        />
+    )
 };
 
 const api: WidgetApi = {
