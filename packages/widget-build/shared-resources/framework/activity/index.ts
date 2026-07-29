@@ -1,4 +1,4 @@
-import { isActivityEnabled } from './activity.guard';
+import {getDebugTargets} from "@reactedge/framework/activity/activity.guard";
 
 type Level = 'info' | 'warn' | 'error';
 
@@ -24,14 +24,14 @@ export interface Activity {
 export class WidgetActivity
     implements Activity {
 
-    private readonly widget: string;
+    private readonly widgetId: string;
     private readonly instance?: string;
 
     constructor(
-        widget: string,
+        widgetId: string,
         instance?: string
     ) {
-        this.widget = widget;
+        this.widgetId = widgetId;
         if (instance !== undefined) {
             this.instance = instance;
         }
@@ -45,8 +45,8 @@ export class WidgetActivity
     ): void {
 
         const payload: ActivityPayload = {
-            widget: this.widget,
-            instance: this.instance ?? this.widget,
+            widget: this.widgetId,
+            instance: this.instance ?? this.widgetId,
             phase,
             message,
             level,
@@ -54,9 +54,9 @@ export class WidgetActivity
             ts: Date.now(),
         };
 
-        if (isActivityEnabled()) {
+        if (this.isActivityEnabled()) {
             const prefix =
-                `[${this.widget}] ${phase}`;
+                `[${this.widgetId}] ${phase}`;
 
             if (level === 'error') {
                 console.error(prefix, payload);
@@ -84,6 +84,18 @@ export class WidgetActivity
                 {
                     detail: payload,
                 }
+            )
+        );
+    }
+
+    private isActivityEnabled(): boolean {
+        const debugTargets = getDebugTargets();
+
+        return (
+            debugTargets !== null &&
+            (
+                debugTargets.includes("all") ||
+                debugTargets.includes(this.widgetId.toLowerCase())
             )
         );
     }
