@@ -7,7 +7,7 @@ import { buildWidget } from "./widget-processor/build-widget.ts";
 import { Report } from "./report.ts";
 import { updateAssetRegistry } from "./widget-processor/asset-registry.ts";
 import { loadContract } from "./widget-processor/contract-loader.ts";
-import { loadSsrCss } from "./widget-processor/ssr-css-loadeer.ts";
+import { loadSsrCss } from "./widget-processor/ssr-css-loader.ts";
 import { generateSsr } from "./widget-processor/ssr-generator.ts";
 import { writeManifest } from "./widget-processor/manifest-writer.ts";
 import { getWidgetPath } from "./paths.ts";
