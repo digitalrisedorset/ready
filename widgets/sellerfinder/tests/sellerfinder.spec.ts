@@ -12,7 +12,7 @@ test.describe('SellerFinder Widget', () => {
         await expect(widget).toBeVisible();
     });
 
-    test('mounts successfully with valid config', async ({ page }) => {
+    test('mounts successfully with valid config', async () => {
         const sellers = await widget.locator('[data-seller-card]').count();
         await expect(sellers).toBeGreaterThan(0);
     });

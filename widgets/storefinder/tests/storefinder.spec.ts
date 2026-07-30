@@ -12,7 +12,7 @@ test.describe('StoreFinder Widget', () => {
         await expect(widget).toBeVisible();
     });
 
-    test('mounts successfully with valid config', async ({ page }) => {
+    test('mounts successfully with valid config', async () => {
         const stores = await widget.locator('[data-store-card]').count();
         await expect(stores).toBeGreaterThan(0);
     });

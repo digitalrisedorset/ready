@@ -18,7 +18,7 @@ export function StoreFinder({config}: Props) {
     const [error, setError] = useState<string | null>(null);
     const storeSearchService = useMemo(
         () => new StoreSearchService(config.data, mapSearch),
-        [mapSearch]
+        [mapSearch, config.data]
     );
     const {t} = useTranslationState()
 

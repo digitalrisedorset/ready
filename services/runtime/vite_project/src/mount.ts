@@ -1,8 +1,10 @@
 import type {OnScrollMode, ResolvedWidget, WidgetLoadMode, WidgetModule} from "./types.ts";
 import type { RuntimeWidgetRegistry } from "@reactedge/framework/contracts/runtime/RuntimeWidgetRegistry.ts";
 import {buildRuntimeConfig, stripMeta} from "./util.ts";
+import {WidgetActivity} from "@reactedge/framework/activity";
 
 let registryCache: RuntimeWidgetRegistry | null = null;
+const activity = new WidgetActivity("runtime");
 
 function getRegistry(): RuntimeWidgetRegistry {
     if (registryCache) {
@@ -127,22 +129,17 @@ export async function mountWidget(el: HTMLElement) {
         const debugMode = getDebugMode();
 
         if (debugMode === 'runtime') {
-            console.group(`[ReactEdge] ${type}`);
-
-            console.log('Element:', el);
-            console.log('Registry entry:', entry);
-            console.log('Contract:', entry.contract);
-            console.log('Runtime:', runtimeConfig);
-            console.log(
-                'Runtime node:',
-                document.getElementById('reactedge-runtime')
-            );
-
-            console.groupEnd();
+            activity.group(`Runtime ${type}`, {
+                element: el,
+                registry: entry,
+                contract: entry.contract,
+                runtime: runtimeConfig,
+                runtimeNode: document.getElementById("reactedge-runtime")
+            });
         }
 
         if (!shouldMountWidgets()) {
-            console.info('[ReactEdge] CSR mount skipped', {
+            activity.log('[ReactEdge] CSR mount skipped', {
                 widget: entry.widget,
                 instance: entry.id
             });
@@ -196,7 +193,7 @@ export function scheduleWidgets() {
                 mountWidget(el);
             } catch (e: unknown) {
                 if (e instanceof Error) {
-                    console.log(e.message);
+                    activity.log(e.message);
                 }
             }
             return;
@@ -208,7 +205,7 @@ export function scheduleWidgets() {
                     mountWidget(el);
                 } catch (e: unknown) {
                     if (e instanceof Error) {
-                        console.log(e.message);
+                        activity.log(e.message);
                     }
                 }
             });

@@ -14,7 +14,7 @@ export function useMagentoCart(config: WidgetConfig) {
         window.addEventListener("cart:changed", reload);
         return () => window.removeEventListener("cart:changed", reload);
 
-    }, []);
+    }, [config]);
 
     useEffect(() => {
         const loadInitial = async () => {
@@ -23,7 +23,7 @@ export function useMagentoCart(config: WidgetConfig) {
         };
 
         loadInitial();
-    }, []);
+    }, [config]);
 
     return { cart };
 }

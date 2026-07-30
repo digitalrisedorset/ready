@@ -6,7 +6,7 @@ import {
     type SellerFinderDataConfig,
     type SellerWithDistance
 } from "./seller.types";
-import { MapSearch } from "../Model/MapSearch";
+import type { MapSearch } from "../Model/MapSearch";
 
 const KM_TO_MI = 0.621371;
 const MI_TO_KM = 1 / KM_TO_MI; // avoids rounding mismatch

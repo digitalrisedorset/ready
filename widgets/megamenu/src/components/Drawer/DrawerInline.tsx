@@ -23,7 +23,7 @@ export const DrawerInline: React.FC<DrawerInlineProps> = ({
         return () => {
             document.removeEventListener("keydown", onKeyDown);
         };
-    }, [isOpen]);
+    }, [isOpen, onClose]);
 
     return (
         <>

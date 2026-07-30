@@ -26,7 +26,7 @@ export const SystemStateProvider: React.FC<SystemStateProviderProps> = ({
 
     const graphqlClient = useMemo(
         () => createGraphqlService(config.magentoGraphql.api, runtime.storeCode, activity),
-        [config.magentoGraphql?.api, runtime.storeCode]
+        [config.magentoGraphql?.api, runtime.storeCode, activity]
     );
 
     return (

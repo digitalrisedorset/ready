@@ -10,19 +10,19 @@ test.describe('ContactUs Widget', () => {
         await expect(widget).toBeVisible();
     });
 
-    test('ContactUs renders configured title', async ({page}) => {
+    test('ContactUs renders configured title', async () => {
         const title = widget.locator('[data-contact-title]');
         await expect(title).toBeVisible();
         await expect(title).not.toHaveText('');
     });
 
-    test('ContactUs renders at least one field', async ({page}) => {
+    test('ContactUs renders at least one field', async () => {
         const fields = widget.locator('[data-contact-field]');
 
         await expect(fields).toHaveCount(3);
     });
 
-    test('ContactUs renders submit button', async ({page}) => {
+    test('ContactUs renders submit button', async () => {
         const submit = widget.locator('[data-contact-submit]');
 
         await expect(submit).toBeVisible();
@@ -33,7 +33,7 @@ test.describe('ContactUs Widget', () => {
         await expect(turnstile).toBeVisible();
     });
 
-    test('ContactUs submit remains disabled after filling fields (without Turnstile)', async ({page}) => {
+    test('ContactUs submit remains disabled after filling fields (without Turnstile)', async () => {
         const submit = widget.locator('[data-contact-submit]');
         await expect(submit).toBeVisible();
         await expect(submit).toBeDisabled();
@@ -55,7 +55,7 @@ test.describe('ContactUs Widget', () => {
         await expect(submit).toBeDisabled();
     });
 
-    test('ContactUs submit enables when Turnstile token is present', async ({page}) => {
+    test('ContactUs submit enables when Turnstile token is present', async () => {
         const submit = widget.locator('[data-contact-submit]');
         const fields = widget.locator('[data-contact-field]');
 

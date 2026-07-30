@@ -1,6 +1,6 @@
 import type {Translations} from "../components/Types.ts";
 
-let translations: Translations = {};
+const translations: Translations = {};
 
 export function setTranslations(t: Translations) {
     translations = t;

@@ -1,8 +1,10 @@
 import {Widget} from "../Widget.tsx";
 import {ResourceLoader} from "@reactedge/framework/contract.ts";
+import {WidgetActivity} from "@reactedge/framework/activity";
 
 async function main() {
     const loader = new ResourceLoader();
+    const activity = new WidgetActivity()
     const contract = await loader.loadContract("default.json");
     const runtime = await loader.loadRuntime();
 
@@ -11,10 +13,13 @@ async function main() {
     const mode = __REACTEDGE_MODE__;
 
     if (mode === "hydrate") {
-        console.debug("Hydrating existing HTML");
-        console.debug(container.innerHTML);
+        activity.debug("Hydrating existing HTML", {
+            contract,
+            runtime,
+            html: container.innerHTML
+        });
     } else {
-        console.debug("Rendering from scratch");
+        activity.debug("Rendering from scratch");
     }
 
     if (mode === "hydrate") {
