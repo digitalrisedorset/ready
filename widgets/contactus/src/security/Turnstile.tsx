@@ -1,5 +1,5 @@
 import { useEffect, useRef } from "react";
-import { ensureTurnstileLoaded } from "../security/turnstileService";
+import { ensureTurnstileLoaded } from "./turnstileService.ts";
 import {useActivityContext} from "../activity/Context/useActivityContext.ts";
 
 type TurnstileProps = {
@@ -41,7 +41,7 @@ export function Turnstile({ siteKey, onToken, containerId }: TurnstileProps) {
                 window.turnstile.remove(widgetId.current);
             }
         };
-    }, [siteKey, containerId]);
+    }, [siteKey, containerId, activity]);
 
     return null;
 }

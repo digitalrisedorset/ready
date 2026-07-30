@@ -69,6 +69,24 @@ export class WidgetActivity
             this.dispatchActivityEvent(payload);
         }
     }
+    public group(
+        title: string,
+        values?: Record<string, unknown>
+    ): void {
+        if (!this.isEnabled()) {
+            return;
+        }
+
+        console.group(`[ReactEdge] ${title}`);
+
+        if (values) {
+            for (const [key, value] of Object.entries(values)) {
+                console.log(`${key}:`, value);
+            }
+        }
+
+        console.groupEnd();
+    }
 
     private dispatchActivityEvent(
         payload: ActivityPayload

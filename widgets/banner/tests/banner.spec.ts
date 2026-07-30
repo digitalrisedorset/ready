@@ -1,4 +1,4 @@
-import {test, expect, Locator} from '@playwright/test';
+import type Locator, {test, expect} from '@playwright/test';
 import {WIDGET_ID} from "../src/Config";
 
 test.describe('Banner Widget', () => {
@@ -10,7 +10,7 @@ test.describe('Banner Widget', () => {
         await expect(widget).toBeVisible();
     });
 
-    test('Banner widget finds its slides', async ({ page }) => {
+    test('Banner widget finds its slides', async () => {
         await expectSlidesToBeVisible(widget);
     });
 
@@ -18,7 +18,7 @@ test.describe('Banner Widget', () => {
 
         test.use({ viewport: { width: 375, height: 667 } });
 
-        test('Banner next button activates next image on mobile', async ({ page }) => {
+        test('Banner next button activates next image on mobile', async () => {
             const activeBefore = widget.locator('[data-banner-active="true"]');
             await expect(activeBefore).toHaveCount(1);
 
@@ -40,7 +40,7 @@ test.describe('Banner Widget', () => {
 
 
 
-        test('Banner previous button activates the previous slide on mobile', async ({page}) => {
+        test('Banner previous button activates the previous slide on mobile', async () => {
             const nextButton = widget.locator('[data-banner-next]');
             const prevButton = widget.locator('[data-banner-prev]');
 
@@ -76,7 +76,7 @@ test.describe('Banner Widget', () => {
         });
 
 
-        test('Banner never has more than one active slide', async ({page}) => {
+        test('Banner never has more than one active slide', async () => {
             await page.setViewportSize({width: 375, height: 667});
 
             const next = widget.locator('[data-banner-next]');
@@ -100,7 +100,7 @@ test.describe('Banner Widget', () => {
             await expect(widget.locator('[data-banner-active="true"]')).toHaveCount(1);
         });
 
-        test('Banner supports keyboard navigation on mobile', async ({page}) => {
+        test('Banner supports keyboard navigation on mobile', async () => {
             await widget.focus();
 
             const first = await widget

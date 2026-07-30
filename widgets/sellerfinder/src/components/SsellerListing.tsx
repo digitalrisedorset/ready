@@ -18,7 +18,7 @@ export function SellerFinder({config}: Props) {
     const [error, setError] = useState<string | null>(null);
     const sellerSearchService = useMemo(
         () => new SellerSearchService(config.data, mapSearch),
-        [mapSearch]
+        [mapSearch, config.data]
     );
     const {t} = useTranslationState()
 

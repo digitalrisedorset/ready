@@ -53,8 +53,14 @@ export const GoogleReviews = ({ config }: Props) => {
                 placeId,
                 fields: ["name", "rating", "user_ratings_total", "reviews"],
             },
-            (result: any, status: any) => {
-                if (status === "OK" && result) {
+            (
+                result: google.maps.places.PlaceResult | null,
+                status: google.maps.places.PlacesServiceStatus
+            ) => {
+                if (
+                    status === google.maps.places.PlacesServiceStatus.OK &&
+                    result
+                ) {
                     setData({
                         name: result.name,
                         rating: result.rating,

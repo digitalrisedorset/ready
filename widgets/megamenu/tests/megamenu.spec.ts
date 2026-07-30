@@ -10,21 +10,21 @@ test.describe('Megamenu widget (WordPress embed)', () => {
         await expect(widget).toBeVisible();
     });
 
-    test('Megamenu widget mounts', async ({page}) => {
+    test('Megamenu widget mounts', async () => {
         await expect(widget).toBeAttached();
     });
 
-    test('Megamenu renders top-level items', async ({page}) => {
+    test('Megamenu renders top-level items', async () => {
         await expect(widget.getByText('Men').first()).toBeVisible();
         await expect(widget.getByText('Women')).toBeVisible();
     });
 
-    test('Megamenu renders CTA item', async ({page}) => {
+    test('Megamenu renders CTA item', async () => {
         const cta = widget.getByText('Gear');
         await expect(cta).toBeVisible();
     });
 
-    test('Megamenu shows submenu on interaction', async ({page}) => {
+    test('Megamenu shows submenu on interaction', async () => {
         await widget.getByText('Women').click();
         await expect(widget.getByText('Bras & Tanks')).toBeVisible();
     });

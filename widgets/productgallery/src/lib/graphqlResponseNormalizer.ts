@@ -1,9 +1,5 @@
 import type {WidgetActivity} from "@reactedge/framework/activity";
 
-export interface GraphqlNormalizerOptions {
-    patchOn?: boolean;
-}
-
 const PATCH_ON_DEFAULT = true;
 
 export function normalizeGraphqlResponse(
@@ -41,7 +37,7 @@ export function normalizeGraphqlResponse(
         try {
             const parsed = JSON.parse(candidate);
 
-            console.warn("⚠ DEMO PATCH ACTIVE: GraphQL response was polluted. Fallback parser used.");
+            activity?.log('graphql-invalid-json',"⚠ DEMO PATCH ACTIVE: GraphQL response was polluted. Fallback parser used.", null, 'warn');
 
             return parsed;
         } catch {

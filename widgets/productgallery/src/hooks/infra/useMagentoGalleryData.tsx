@@ -10,29 +10,27 @@ export function useMagentoGalleryData(enabled: boolean, sku?: string) {
     const [error, setError] = useState<Error | null>(null);
     const { graphqlClient } = useSystemState()
 
-    const load = async (sku?: string) => {
-        if (!sku) return;
-
-        setLoading(true);
-        setError(null);
-
-        try {
-            const result = await fetchMagentoGalleryData(graphqlClient, sku)
-            setData(result);
-        } catch (err: unknown) {
-            setError(getError(err));
-        } finally {
-            setLoading(false);
-        }
-    };
-
     useEffect(() => {
-        if (!enabled) {
+        if (!enabled || sku === undefined) {
             return;
         }
 
-        load(sku);
-    }, [sku, enabled]);
+        async function load() {
+            setLoading(true);
+            setError(null);
+
+            try {
+                const result = await fetchMagentoGalleryData(graphqlClient, sku);
+                setData(result);
+            } catch (err: unknown) {
+                setError(getError(err));
+            } finally {
+                setLoading(false);
+            }
+        }
+
+        load();
+    }, [sku, enabled, graphqlClient]);
 
     return { magentoGalleryData: data, loading, error, refetch: load };
 }
